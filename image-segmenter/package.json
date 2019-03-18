@@ -1,0 +1,58 @@
+{
+  "name": "max-image-segmenter",
+  "version": "1.0.0-rc.1",
+  "description": "Identify objects in an image, additionally assigning each pixel of the image to a particular object.",
+  "main": "dist/max.imgseg.cjs.js",
+  "module": "dist/max.imgseg.es.js",
+  "jsdelivr": "dist/max.imgseg.min.js",
+  "unpkg": "dist/max.imgseg.min.js",
+  "scripts": {
+    "clean": "rimraf dist && mkdirp dist",
+    "rollup": "rollup --config rollup.config.js",
+    "uglify": "uglifyjs dist/max.imgseg.js -mc --source-map --output dist/max.imgseg.min.js",
+    "copy": "ncp model dist/model",
+    "build": "npm run clean && npm run rollup && npm run uglify && npm run copy",
+    "test": "standard && echo \"Only code linting currently being run\""
+  },
+  "author": "va barbosa <va@us.ibm.com> (https://github.com/vabarbosa/)",
+  "license": "Apache-2.0",
+  "keywords": [
+    "image segmenter",
+    "object detection",
+    "model asset exchange",
+    "max",
+    "tensorflow.js",
+    "tensorflowjs",
+    "tf.js",
+    "tfjs",
+    "machine learning"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CODAIT/max-tfjs-models.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CODAIT/max-tfjs-models/issues"
+  },
+  "homepage": "https://github.com/CODAIT/max-tfjs-models/tree/master/image-segmenter#readme",
+  "dependencies": {
+    "@tensorflow/tfjs-node": "1.x",
+    "canvas": "2.3.1",
+    "node-fetch": "^2.3.0"
+  },
+  "devDependencies": {
+    "jimp": "^0.6.0",
+    "mkdirp": "^0.5.1",
+    "ncp": "^2.0.0",
+    "rimraf": "^2.6.3",
+    "rollup": "^1.6.0",
+    "rollup-plugin-replace": "^2.1.0",
+    "standard": "^12.0.1",
+    "uglify-es": "^3.3.9"
+  },
+  "standard": {
+    "ignore": [
+      "dist"
+    ]
+  }
+}

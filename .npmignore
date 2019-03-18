@@ -1,0 +1,8 @@
+.DS_Store
+.cache
+
+rollup.config.js
+
+src/
+node_modules/
+/model
