@@ -1,5 +1,5 @@
 {
-  "name": "max-image-segmenter",
+  "name": "@codait/max-image-segmenter",
   "version": "1.0.0-rc.1",
   "description": "Identify objects in an image, additionally assigning each pixel of the image to a particular object.",
   "main": "dist/max.imgseg.cjs.js",
