@@ -30,7 +30,7 @@ npm run build
 
 ## Usage
 
-Find working examples for browser and Node.js environments in the [`/examples`](https://github.com/CODAIT/max-tfjs-models/tree/master/image-segmenter/examples) directory
+Find working examples for browser and Node.js environments in the [`/examples`](https://github.com/CODAIT/max-tfjs-models/tree/master/image-segmenter/examples) directory. Be aware inference can be much slower on the first call than the subsequent calls.
 
 ### Browser
 

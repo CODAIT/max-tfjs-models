@@ -94,13 +94,33 @@
     }
 
     function runModel () {
+      if (!imageSource) {
+        message('please upload an image')
+      } else {
+        disableElements()
+        message('running prediction...')
+        imageSegmenter.predict(imageSource)
+          .then(showSegments)
+          .catch(message)
+          .then(enableElements)
+      }
+    }
+
+    // load model and warm up the cache so subsequent predictions run faster
+    function loadModel () {
       disableElements()
-      message('loading model and running prediction...')
-      imageSegmenter.predict(imageSource)
-        .then(showSegments)
+      message('loading model. this may take a few seconds...')
+      imageSegmenter.loadModel()
+        .then(function () {
+          message('model loaded')
+          enableElements()
+          return imageSegmenter.predict(new Image(1,1))
+        })
         .catch(message)
         .then(enableElements)
     }
+    
+    document.addEventListener('DOMContentLoaded', loadModel)
   </script>
   <body>
     <div style="margin: 20px;">
