@@ -4,7 +4,7 @@ This is a TensorFlow.js port of the [MAX Image Segmenter](https://github.com/IBM
 
 ## Install
 
-> **Note**: _When installing for a Node.js environment, the `node-gyp` module will need to get built as part of the installation of the `tfjs-node` dependency. For `node-gyp` to successfully build, Python 2.7 is required._
+> **Note**: _When installing for a Node.js environment, the `node-gyp` module will need to get built as part of the installation of the `tfjs-node` dependency. Currently, for `node-gyp` to successfully build, Python 2.7 is required._
 
 ### Browser
 
@@ -29,6 +29,8 @@ npm run build
 ```
 
 ## Usage
+
+Find working examples for browser and Node.js environments in the [`/examples`](https://github.com/CODAIT/max-tfjs-models/tree/master/image-segmenter/examples) directory
 
 ### Browser
 
@@ -64,66 +66,63 @@ read(imagePath)
 
 ### API
 
-#### loadModel()
+- #### loadModel()
 
-Loads the model files from Object Storage.
+  Loads the model files.
 
-Returns the TensorFlow.js model.
+  Returns the TensorFlow.js model.
 
+- #### processInput(_image_)
 
-#### processInput(_image_)
+  Preprocessing the input image to the shape and format expected by the model. The image is resized and converted to a 4D Tensor.
 
-Preprocessing the input image to the shape and format expected by the model. The image is resized and converted to a 4D Tensor.
+  `image` - an instance of ImageData, HTMLImageElement, HTMLCanvasElement, or HTMLVideoElement.
 
-**image** - (Required) an instance of ImageData, HTMLImageElement, HTMLCanvasElement, or HTMLVideoElement.
+  Returns a 4D Tensor.
 
-Returns a 4D Tensor.
+- #### runInference(_inputTensor_)
 
+  Runs inference on the input Tensor. The output is 2D Tensor with an object ID assigned to each index of the input Tensor.
 
-#### runInference(_inputTensor_)
+  `inputTensor` - a 4D Tensor representing an ImageData
 
-Runs inference on the input Tensor. The output is 2D Tensor with an object ID assigned to each index of the input Tensor.
+  Returns the inference results.
 
-**inputTensor** - (Required) a 4D Tensor representing an ImageData
+- #### processOutput(_inferenceResults_)
 
-Returns the inference results.
+  Processes the inference output replacing the output Tensor with an 2D array and including the labels of the object detected.
 
+  `inferenceResults` - the model output from running inference.
 
-#### processOutput(_inferenceResults_)
+  Returns an object containing
 
-Processes the inference output replacing the output Tensor with an 2D array and including the labels of the object detected.
+  - `segmentationMap`: a 2D array with an object ID assigned to each pixel of the image
+  - `objectsDetected`: an array of objects detected in the image
+  - `imageSize`: an object with the width and height of the resized image (corresponds to the size of the `segmentationMap`)
 
-**inferenceResults** - (Required) the model output from running inference.
+- #### predict(_image_)
 
-Returns an object containing
+  Loads the model (if not loaded), preprocesses the input image, runs inference, process the inference output, and returns a prediction object.
 
-- `segmentationMap`: a 2D array with an object ID assigned to each pixel of the image
-- `objectsDetected`: an array of objects detected in the image
-- `imageSize`: an object with the width and height of the resized image (corresponds to the size of the `segmentationMap`)
+  `image` - an instance of ImageData, HTMLImageElement, HTMLCanvasElement, or HTMLVideoElement.
 
+  Returns an object containing
 
-#### predict(_image_)
+  - `segmentationMap`: a 2D array with an object ID assigned to each pixel of the image
+  - `objectsDetected`: an array of objects detected in the image
+  - `imageSize`: an object with the width and height of the resized image (corresponds to the size of the `segmentationMap`)
 
-Loads the model (if not loaded), preprocesses the input image, runs inference, process the inference output, and returns a prediction object.
+- #### labelsMap()
 
-**image** - (Required) an instance of ImageData, HTMLImageElement, HTMLCanvasElement, or HTMLVideoElement.
+  An array of object labels where the label's index corresponds to its ID.
 
-Returns an object containing
+- #### colorsMap()
 
-- `segmentationMap`: a 2D array with an object ID assigned to each pixel of the image
-- `objectsDetected`: an array of objects detected in the image
-- `imageSize`: an object with the width and height of the resized image (corresponds to the size of the `segmentationMap`)
+  An array of RGB color values that can be used to map each object to a specific color.
 
+## Model
 
-#### labelsMap()
-
-An array of object labels where the label's index corresponds to its ID.
-
-
-#### colorsMap()
-
-An array of RGB color values used in PASCAL VOC segmentation benchmark.
-
+The model assets produced by converting the pre-trained model to the TensorFlow.js format can be found in the [`/model`](https://github.com/CODAIT/max-tfjs-models/tree/master/image-segmenter/model) directory.
 
 ## Resources
 
