@@ -66,13 +66,13 @@ read(imagePath)
 
 ### API
 
-- #### loadModel()
+- **loadModel()**
 
   Loads the model files.
 
   Returns the TensorFlow.js model.
 
-- #### processInput(_image_)
+- **processInput(_image_)**
 
   Preprocessing the input image to the shape and format expected by the model. The image is resized and converted to a 4D Tensor.
 
@@ -80,7 +80,7 @@ read(imagePath)
 
   Returns a 4D Tensor.
 
-- #### runInference(_inputTensor_)
+- **runInference(_inputTensor_)**
 
   Runs inference on the input Tensor. The output is 2D Tensor with an object ID assigned to each index of the input Tensor.
 
@@ -88,7 +88,7 @@ read(imagePath)
 
   Returns the inference results.
 
-- #### processOutput(_inferenceResults_)
+- **processOutput(_inferenceResults_)**
 
   Processes the inference output replacing the output Tensor with an 2D array and including the labels of the object detected.
 
@@ -100,7 +100,7 @@ read(imagePath)
   - `objectsDetected`: an array of objects detected in the image
   - `imageSize`: an object with the width and height of the resized image (corresponds to the size of the `segmentationMap`)
 
-- #### predict(_image_)
+- **predict(_image_)**
 
   Loads the model (if not loaded), preprocesses the input image, runs inference, process the inference output, and returns a prediction object.
 
@@ -112,11 +112,11 @@ read(imagePath)
   - `objectsDetected`: an array of objects detected in the image
   - `imageSize`: an object with the width and height of the resized image (corresponds to the size of the `segmentationMap`)
 
-- #### labelsMap()
+- **labelsMap()**
 
   An array of object labels where the label's index corresponds to its ID.
 
-- #### colorsMap()
+- **colorsMap()**
 
   An array of RGB color values that can be used to map each object to a specific color.
 
