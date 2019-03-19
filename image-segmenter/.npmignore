@@ -5,5 +5,4 @@ rollup.config.js
 
 src/
 node_modules/
-/model
 /examples
