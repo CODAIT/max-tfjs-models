@@ -1,6 +1,6 @@
 {
   "name": "@codait/max-image-segmenter",
-  "version": "1.0.0-rc.1",
+  "version": "0.1.0",
   "description": "Identify objects in an image, additionally assigning each pixel of the image to a particular object.",
   "main": "dist/max.imgseg.cjs.js",
   "module": "dist/max.imgseg.es.js",
@@ -11,7 +11,7 @@
     "rollup": "rollup --config rollup.config.js",
     "uglify": "uglifyjs dist/max.imgseg.js -mc --source-map --output dist/max.imgseg.min.js",
     "copy": "ncp model dist/model",
-    "build": "npm run clean && npm run rollup && npm run uglify && npm run copy",
+    "build": "npm run clean && npm run rollup && npm run uglify",
     "test": "standard && echo \"Only code linting currently being run\""
   },
   "author": "va barbosa <va@us.ibm.com> (https://github.com/vabarbosa/)",
@@ -37,8 +37,7 @@
   "homepage": "https://github.com/CODAIT/max-tfjs-models/tree/master/image-segmenter#readme",
   "dependencies": {
     "@tensorflow/tfjs-node": "1.x",
-    "canvas": "2.3.1",
-    "node-fetch": "^2.3.0"
+    "canvas": "2.3.1"
   },
   "devDependencies": {
     "jimp": "^0.6.0",

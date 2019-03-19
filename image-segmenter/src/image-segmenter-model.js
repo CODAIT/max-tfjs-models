@@ -1,12 +1,11 @@
 /* globals tf */
 
-let modelPath = '/model/model.json'
+// let modelPath = '/model/model.json'
+let modelPath = 'https://s3.us-east.cloud-object-storage.appdomain.cloud/imagesegmenter/model.json'
 let model = null
 
 if (!process.rollupBrowser) {
-  global.tf = require('@tensorflow/tfjs-node')
-  global.fetch = require('node-fetch')
-  modelPath = `file://${__dirname}/model/model.json`
+  require('@tensorflow/tfjs-node')
 }
 
 /**
