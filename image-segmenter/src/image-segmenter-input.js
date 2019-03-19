@@ -21,10 +21,14 @@ const resizeImage = function (img) {
 const getImageData = function (imageInput) {
   if (process.rollupBrowser) {
     return new Promise((resolve, reject) => {
-      const img = new Image()
-      img.onload = () => resolve(resizeImage(img))
-      img.onerror = err => reject(err)
-      img.src = imageInput
+      if (typeof imageInput === 'string') {
+        const img = new Image()
+        img.onload = () => resolve(resizeImage(img))
+        img.onerror = err => reject(err)
+        img.src = imageInput
+      } else {
+        resolve(resizeImage(imageInput))
+      }
     })
   } else {
     return new Promise(async (resolve, reject) => {
