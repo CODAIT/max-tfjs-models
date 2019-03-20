@@ -30,7 +30,7 @@ npm run build
 
 ## Usage
 
-Find working examples for browser and Node.js environments in the [`/examples`](https://github.com/CODAIT/max-tfjs-models/tree/master/image-segmenter/examples) directory. Be aware inference can be much slower on the first call than the subsequent calls.
+The complete examples for browser and Node.js environments are in the [`/examples`](https://github.com/CODAIT/max-tfjs-models/tree/master/image-segmenter/examples) directory.
 
 ### Browser
 
@@ -74,15 +74,15 @@ read(imagePath)
 
 - **processInput(_image_)**
 
-  Preprocessing the input image to the shape and format expected by the model. The image is resized and converted to a 4D Tensor.
+  Processes the input image to the shape and format expected by the model. The image is resized and converted to a 4D Tensor.
 
   `image` - an instance of ImageData, HTMLImageElement, HTMLCanvasElement, or HTMLVideoElement.
 
-  Returns a 4D Tensor.
+  Returns a 4D Tensor that can be passed to the model.
 
 - **runInference(_inputTensor_)**
 
-  Runs inference on the input Tensor. The output is 2D Tensor with an object ID assigned to each index of the input Tensor.
+  Runs inference on the input Tensor passed. The output is 2D Tensor with an object ID assigned to each index of the input Tensor.
 
   `inputTensor` - a 4D Tensor representing an ImageData
 
@@ -90,7 +90,7 @@ read(imagePath)
 
 - **processOutput(_inferenceResults_)**
 
-  Processes the inference output replacing the output Tensor with an 2D array and including the labels of the object detected.
+  Processes the inference output replacing the output Tensor with an 2D array.
 
   `inferenceResults` - the model output from running inference.
 
@@ -102,7 +102,7 @@ read(imagePath)
 
 - **predict(_image_)**
 
-  Loads the model (if not loaded), preprocesses the input image, runs inference, process the inference output, and returns a prediction object.
+  Loads the model (if not loaded), processes the input image, runs inference, processes the inference output, and returns a prediction object. This is a convenience function to avoid having to call each of the functions (`loadModel`, `processInput`, `runInference`, `processOutput`) individually.
 
   `image` - an instance of ImageData, HTMLImageElement, HTMLCanvasElement, or HTMLVideoElement.
 
@@ -114,7 +114,7 @@ read(imagePath)
 
 - **labelsMap()**
 
-  An array of object labels where the label's index corresponds to its ID.
+  An array of object labels where the label's index corresponds to its ID. It can be used to map the IDs in the `segmentationMap` to its corresponding label.
 
 - **colorsMap()**
 
