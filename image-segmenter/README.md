@@ -13,6 +13,8 @@ This is a TensorFlow.js port of the [MAX Image Segmenter](https://github.com/IBM
 <script src="https://cdn.jsdelivr.net/npm/@codait/max-image-segmenter"></script>
 ```
 
+By default when the `@codait/max-image-segmenter` JavaScript module is loaded, the model is automatically loaded and the cache warmed up (by running inference against an all zero input). To change this default behavior (and prevent the model from being automatically initialized) set attribute `data-init-model="false"` in the `script` tag for the `@codait/max-image-segmenter`.
+
 ### Node.js
 
 ```
@@ -53,7 +55,7 @@ imageSegmenter
 const { predict } = require('@codait/max-image-segmenter')
 const { read, MIME_PNG } = require('jimp')
 
-const imagePath = `file://${ __dirname }/my-image.jpg`
+const imagePath = `file://${ __dirname}/my-image.jpg`
 
 read(imagePath)
   .then(imageData => imageData.scaleToFit(512, 512).getBufferAsync(MIME_PNG))
