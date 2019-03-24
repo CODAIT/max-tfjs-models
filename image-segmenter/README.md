@@ -66,9 +66,11 @@ read(imagePath)
 
 ### API
 
-- **loadModel()**
+- **loadModel(_init_)**
 
   Loads the model files.
+
+  `init` - if `true`, a prediction will be triggered using an all zero Tensor to warm up the model (helps increase speed of subsequent predictions when running in a browser). Default is `true`.
 
   Returns the TensorFlow.js model.
 

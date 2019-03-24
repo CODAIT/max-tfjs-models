@@ -1,5 +1,6 @@
 .DS_Store
 .cache
+.vscode
 
 rollup.config.js
 

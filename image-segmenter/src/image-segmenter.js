@@ -7,8 +7,8 @@ const processInput = function (inputImage) {
   return preprocess(inputImage)
 }
 
-const loadModel = function () {
-  return load()
+const loadModel = function (init) {
+  return load(init)
 }
 
 const runInference = function (inputTensor) {

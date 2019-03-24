@@ -13,7 +13,7 @@ if (process.argv.length < 3) {
     .then(imageData => imageData.scaleToFit(512, 512).getBufferAsync(MIME_PNG))
     .then(imageBuffer => predict(imageBuffer))
     .then(prediction => {
-      console.log(prediction.segmentationMap)
+      // console.log(prediction.segmentationMap)
       console.log(prediction.objectsDetected)
     })
 }
