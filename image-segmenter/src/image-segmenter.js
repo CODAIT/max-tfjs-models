@@ -3,6 +3,10 @@ import { load, inference } from './image-segmenter-model.js'
 import { postprocess } from './image-segmenter-output.js'
 import { labels as labelsMap, colors as colorsMap } from './image-segmenter-map.js'
 
+if (!process.rollupBrowser) {
+  global.tf = require('@tensorflow/tfjs-node')
+}
+
 const processInput = function (inputImage) {
   return preprocess(inputImage)
 }

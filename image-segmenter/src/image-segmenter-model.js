@@ -3,10 +3,9 @@
 let modelPath = null
 
 if (!process.rollupBrowser) {
-  require('@tensorflow/tfjs-node')
   modelPath = `file://${__dirname}/../model/model.json`
 } else {
-  modelPath = 'https://s3.us-east.cloud-object-storage.appdomain.cloud/imagesegmenter/model.json'
+  modelPath = 'https://max-assets.s3.us.cloud-object-storage.appdomain.cloud/image-segmenter/tf_js/0.1/model.json'
 }
 let model = null
 let warmed = false
@@ -87,9 +86,7 @@ const istrue = function (param) {
     (typeof param === 'boolean' && param)
 }
 
-if (!process.rollupBrowser) {
-  // require('@tensorflow/tfjs-node')
-} else {
+if (process.rollupBrowser) {
   const init = document.currentScript.getAttribute('data-init-model')
   if (istrue(init)) {
     load(true)

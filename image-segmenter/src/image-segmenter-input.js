@@ -4,7 +4,6 @@ const IMAGESIZE = 512
 let targetSize = { w: IMAGESIZE, h: IMAGESIZE }
 
 if (!process.rollupBrowser) {
-  global.tf = require('@tensorflow/tfjs-node')
   var createCanvas = require('canvas').createCanvas
   var loadImage = require('canvas').loadImage
 }

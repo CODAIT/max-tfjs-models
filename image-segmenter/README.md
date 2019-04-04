@@ -4,8 +4,6 @@ This is a TensorFlow.js port of the [MAX Image Segmenter](https://github.com/IBM
 
 ## Install
 
-> **Note**: _When installing for a Node.js environment, the `node-gyp` module will need to get built as part of the installation of the `tfjs-node` dependency. Currently, for `node-gyp` to successfully build, Python 2.7 is required._
-
 ### Browser
 
 ```html
@@ -21,14 +19,7 @@ By default when the `@codait/max-image-segmenter` JavaScript module is loaded, t
 npm install --save @codait/max-image-segmenter
 ```
 
-### Development
-
-```
-git clone https://github.com/CODAIT/max-tfjs-models.git
-cd max-tfjs-models/image-segmenter
-npm install
-npm run build
-```
+When installing for a Node.js environment, the `node-gyp` module will need to get built as part of the installation of the `tfjs-node` dependency. Currently, for `node-gyp` to successfully build, Python 2.7 is required.
 
 ## Usage
 
