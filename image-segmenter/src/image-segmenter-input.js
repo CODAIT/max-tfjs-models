@@ -1,20 +1,14 @@
 /* globals tf, Image */
 
 const IMAGESIZE = 512
-let targetSize = { w: IMAGESIZE, h: IMAGESIZE }
 
-if (!process.rollupBrowser) {
-  var createCanvas = require('canvas').createCanvas
-  var loadImage = require('canvas').loadImage
-}
+const computeTargetSize = function (width, height) {
+  let resizeRatio = IMAGESIZE / Math.max(width, height)
 
-const resizeImage = function (img) {
-  let resizeRatio = IMAGESIZE / Math.max(img.width, img.height)
-  targetSize.w = Math.round(resizeRatio * img.width)
-  targetSize.h = Math.round(resizeRatio * img.height)
-  img.width = targetSize.w
-  img.height = targetSize.h
-  return img
+  return {
+    width: Math.round(resizeRatio * width),
+    height: Math.round(resizeRatio * height)
+  }
 }
 
 const getImageData = function (imageInput) {
@@ -22,26 +16,24 @@ const getImageData = function (imageInput) {
     return new Promise((resolve, reject) => {
       if (typeof imageInput === 'string') {
         const img = new Image()
-        img.onload = () => resolve(resizeImage(img))
+        img.onload = () => resolve(img)
         img.onerror = err => reject(err)
         img.src = imageInput
       } else {
-        resolve(resizeImage(imageInput))
+        resolve(imageInput)
       }
     })
   } else {
-    return new Promise(async (resolve, reject) => {
-      const img = resizeImage(await loadImage(imageInput))
-      let canvas = createCanvas(img.width, img.height)
-      let ctx = canvas.getContext('2d')
-      await ctx.drawImage(img, 0, 0)
-      resolve(canvas)
-    })
+    return Promise.resolve(imageInput)
   }
 }
 
 const imageToTensor = function (imageData) {
-  return tf.browser.fromPixels(imageData).expandDims()
+  return tf.tidy(() => {
+    const imgTensor = tf.browser.fromPixels(imageData)
+    const targetSize = computeTargetSize(imgTensor.shape[0], imgTensor.shape[1])
+    return imgTensor.resizeBilinear([targetSize.width, targetSize.height]).expandDims()
+  })
 }
 
 /**

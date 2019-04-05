@@ -4,6 +4,7 @@
 
 *.tgz
 rollup.config.js
+conversion-manifest.json
 
 src/
 node_modules/

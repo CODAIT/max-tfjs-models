@@ -2,6 +2,17 @@
 const { predict } = require('../dist/max.imgseg.cjs.js')
 
 const { read, MIME_PNG } = require('jimp')
+const { createCanvas, loadImage } = require('canvas')
+
+const getCanvasElement = function (imageInput) {
+  return new Promise(async (resolve, reject) => {
+    const img = await loadImage(imageInput)
+    let canvas = createCanvas(img.width, img.height)
+    let ctx = canvas.getContext('2d')
+    await ctx.drawImage(img, 0, 0)
+    resolve(canvas)
+  })
+}
 
 if (process.argv.length < 3) {
   console.log('please pass an image to process. ex:')
@@ -11,7 +22,8 @@ if (process.argv.length < 3) {
 
   read(imagePath)
     .then(imageData => imageData.scaleToFit(512, 512).getBufferAsync(MIME_PNG))
-    .then(imageBuffer => predict(imageBuffer))
+    .then(imageBuffer => getCanvasElement(imageBuffer))
+    .then(imageElement => predict(imageElement))
     .then(prediction => {
       // console.log(prediction.segmentationMap)
       console.log(prediction.objectsDetected)
