@@ -1,0 +1,24 @@
+{
+  "name": "MAX-Image-Segmenter",
+  "url": "https://developer.ibm.com/exchanges/models/all/max-image-segmenter",
+  "source": "image-segmenter/1.0/assets.tar.gz/assets/deeplabv3_mnv2_pascal_trainval/frozen_inference_graph.pb",
+  "framework": "tf_js",
+  "converter": {
+    "tensorflowjs": {
+      "version": "0.8.0",
+      "params": {
+        "output_node_names": "SemanticPredictions",
+        "input_format": "tf_frozen_model"
+      }
+    },
+    "pb2json": {
+      "version": "1.0.1"
+    }
+  },
+  "output": [
+    "model.json",
+    "group1-shard1of3",
+    "group1-shard2of3",
+    "group1-shard3of3"
+  ]
+}

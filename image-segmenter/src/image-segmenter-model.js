@@ -15,11 +15,11 @@ let warmed = false
  */
 const load = function (initialize) {
   if (!model) {
-    console.log('loading model...')
-    console.time('model load')
+    // console.log('loading model...')
+    // console.time('model load')
     return tf.loadGraphModel(modelPath)
       .then(m => {
-        console.timeEnd('model load')
+        // console.timeEnd('model load')
         model = m
         if (istrue(initialize)) {
           warmup()
@@ -27,7 +27,7 @@ const load = function (initialize) {
         return Promise.resolve(model)
       })
       .catch(err => {
-        console.timeEnd('model load')
+        // console.timeEnd('model load')
         console.error(err)
         return Promise.reject(err)
       })
@@ -50,10 +50,10 @@ const run = function (imageTensor) {
     console.error('model not available')
     throw new Error('model not available')
   } else {
-    console.log('running model...')
-    console.time('model inference')
+    // console.log('running model...')
+    // console.time('model inference')
     const results = model.predict(imageTensor)
-    console.timeEnd('model inference')
+    // console.timeEnd('model inference')
     warmed = true
     return results
   }
