@@ -7,18 +7,16 @@
     "tensorflowjs": {
       "version": "0.8.0",
       "params": {
+        "input_format": "tf_frozen_model",
         "output_node_names": "SemanticPredictions",
-        "input_format": "tf_frozen_model"
+        "output_json": true
       }
-    },
-    "pb2json": {
-      "version": "1.0.1"
     }
   },
   "output": [
-    "model.json",
     "group1-shard1of3",
     "group1-shard2of3",
-    "group1-shard3of3"
+    "group1-shard3of3",
+    "model.json"
   ]
 }
