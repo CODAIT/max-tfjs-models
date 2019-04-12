@@ -45,14 +45,26 @@ imageSegmenter
 ```javascript
 const { predict } = require('@codait/max-image-segmenter')
 const { read, MIME_PNG } = require('jimp')
+const { createCanvas, loadImage } = require('canvas')
+
+const createCanvasElement = function (imageInput) {
+  return new Promise(async (resolve, reject) => {
+    const img = await loadImage(imageInput)
+    let canvas = createCanvas(img.width, img.height)
+    let ctx = canvas.getContext('2d')
+    await ctx.drawImage(img, 0, 0)
+    resolve(canvas)
+  })
+}
 
 const imagePath = `file://${ __dirname}/my-image.jpg`
 
 read(imagePath)
   .then(imageData => imageData.scaleToFit(512, 512).getBufferAsync(MIME_PNG))
-  .then(imageBuffer => predict(imageBuffer))
+  .then(imageBuffer => createCanvasElement(imageBuffer))
+  .then(imageElement => predict(imageElement))
   .then(prediction => {
-    console.log(prediction.segmentationMap)
+    // console.log(prediction.segmentationMap)
     console.log(prediction.objectsDetected)
   })
 ```
@@ -71,7 +83,7 @@ read(imagePath)
 
   Processes the input image to the shape and format expected by the model. The image is resized and converted to a 4D Tensor.
 
-  `image` - an instance of ImageData, HTMLImageElement, HTMLCanvasElement, or HTMLVideoElement.
+  `image` - an instance of HTMLImageElement, HTMLCanvasElement, or HTMLVideoElement.
 
   Returns a 4D Tensor that can be passed to the model.
 
@@ -99,7 +111,7 @@ read(imagePath)
 
   Loads the model (if not loaded), processes the input image, runs inference, processes the inference output, and returns a prediction object. This is a convenience function to avoid having to call each of the functions (`loadModel`, `processInput`, `runInference`, `processOutput`) individually.
 
-  `image` - an instance of ImageData, HTMLImageElement, HTMLCanvasElement, or HTMLVideoElement.
+  `image` - an instance of HTMLImageElement, HTMLCanvasElement, or HTMLVideoElement.
 
   Returns an object containing
 
