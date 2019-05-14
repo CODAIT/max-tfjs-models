@@ -1,0 +1,149 @@
+<html>
+  <head>
+    <title>human-pose-estimator</title>
+  </head>
+  <script>
+    let imageSource
+
+    function disableElements () {
+      document.getElementById('modelimage').setAttribute('disabled', true)
+      document.getElementById('modelrun').setAttribute('disabled', true)
+    }
+    function enableElements () {
+      document.getElementById('modelimage').removeAttribute('disabled')
+      document.getElementById('modelrun').removeAttribute('disabled')
+    }
+    function message (msg) {
+      const node = document.createElement('div')
+      node.innerText = msg
+      document.getElementById('message').appendChild(node)
+    }
+
+    function loadImage (input) {
+      if (input.files && input.files[0]) {
+        disableElements()
+
+        let reader = new FileReader()
+
+        reader.onload = function (e) {
+          imageSource = reader.result
+
+          let image = new Image()
+          image.onload = function () {
+            showImage(image)
+            enableElements()
+          }
+          image.src = imageSource
+        }
+
+        reader.readAsDataURL(input.files[0])
+      }
+    }
+
+    function showImage (image) {
+      const imageSize = 512
+      const resizeRatio = imageSize / Math.max(image.width, image.height)
+      let width = Math.round(resizeRatio * image.width)
+      let height = Math.round(resizeRatio * image.height)
+
+      image.width = width
+      image.height = height
+
+      let canvas = document.getElementById('canvasimage')
+      canvas.width = image.width
+      canvas.height = image.height
+
+      let ctx = canvas.getContext('2d')
+      ctx.clearRect(0, 0, width, height)
+      ctx.drawImage(image, 0, 0, width, height)
+
+      document.getElementById('canvasposes').getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
+    }
+
+    function showPoses (prediction) {
+      let poses = prediction.posesDetected
+      message(`${poses.length} pose(s) were detected`)
+
+
+      let canvasPoses = document.getElementById('canvasposes')
+      canvasPoses.width = prediction.imageSize.width
+      canvasPoses.height = prediction.imageSize.height
+      let canvasPosesCtx = canvasPoses.getContext('2d')
+
+      // draw poses
+      const colors = poseEstimator.cocoUtil.colors
+      for (var i = 0; i < poses.length; i++) {
+        message(`pose ${i} contains ${poses[i].poseLines.length} lines(s)`)
+        poses[i].poseLines.forEach((l, j) => {
+          let color = `rgb(${colors[j].join()})`
+          drawLine(canvasPosesCtx, ...l, color)
+        })
+      }
+    }
+
+    function drawLine (canvasCtx, x1, y1, x2, y2, c = 'black') {
+      canvasCtx.beginPath()
+      canvasCtx.moveTo(x1, y1)
+      canvasCtx.lineTo(x2, y2)
+      canvasCtx.lineWidth = 2
+      canvasCtx.strokeStyle = c
+      canvasCtx.stroke()
+    }
+
+    function runModel () {
+      if (!imageSource) {
+        message('please upload an image')
+      } else {
+        disableElements()
+        message('running prediction...')
+        // poseEstimator.config({
+        //   NMSWindowSize: 10,
+        //   NMSThreshold: 0.001,
+        //   LocalPAFThreshold: 0.141,
+        //   PartScoreThreshold: 0.247,
+        //   PAFCountThreshold: 4,
+        //   PartCountThreshold: 4
+        // })
+        poseEstimator.predict(imageSource)
+          .then(showPoses)
+          .catch(message)
+          .then(enableElements)
+      }
+    }
+
+    // load model and warm up the cache so subsequent predictions run faster
+    function loadModel () {
+      disableElements()
+      message('loading model. this may take a few seconds...')
+      poseEstimator.loadModel()
+        .then(function () {
+          message('model loaded')
+          enableElements()
+          return poseEstimator.predict(new Image(1,1))
+        })
+        .catch(message)
+        .then(enableElements)
+    }
+  </script>
+  <body>
+    <div style="margin: 20px;">
+      <h1>human-pose-estimator</h1>
+      <div style="padding: 10px;">
+        <input id="modelimage" type="file" name="filename" accept="image/gif, image/jpeg, image/png" onchange="loadImage(this);">
+        <button id="modelrun" onclick="runModel();">run inference</button>
+      </div>
+      
+      <div style="padding: 10px;">
+        <div id="capimg" style="position:relative;display:inline-block;min-width:600px;vertical-align:top;">
+          <canvas id="canvasimage" style="z-index:1; position:absolute; left:0px; top:0px;"></canvas>
+          <canvas id="canvasposes" style="z-index:3; position:absolute; left:0px; top:0px;"></canvas>
+        </div>
+        <div id="message" style="position:relative;display:inline-block;"></div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.1.2"></script>
+    <script src="/dist/max.humanpose.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@codait/max-human-pose-estimator"></script> -->
+  </body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "MAX-Human-Pose-Estimator",
+  "url": "https://developer.ibm.com/exchanges/models/all/max-human-pose-estimator",
+  "source": "human-pose-estimator/1.0/assets.tar.gz/human-pose-estimator-tensorflow.pb",
+  "framework": "tf_js",
+  "converter": {
+    "tensorflowjs": {
+      "version": "0.8.0",
+      "params": {
+        "input_format": "tf_frozen_model",
+        "output_node_names": "Openpose/concat_stage7",
+        "output_json": true
+      }
+    }
+  },
+  "output": [
+    "group1-shard1of2",
+    "group1-shard2of2",
+    "model.json"
+  ]
+}

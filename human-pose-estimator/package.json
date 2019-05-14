@@ -1,0 +1,59 @@
+{
+  "name": "@codait/max-human-pose-estimator",
+  "version": "0.0.2",
+  "description": "Detect humans in an image and estimate the pose for each person.",
+  "main": "dist/max.humanpose.cjs.js",
+  "module": "dist/max.humanpose.es.js",
+  "jsdelivr": "dist/max.humanpose.min.js",
+  "unpkg": "dist/max.humanpose.min.js",
+  "scripts": {
+    "clean": "rimraf dist && mkdirp dist",
+    "rollup": "rollup --config rollup.config.js",
+    "uglify": "uglifyjs dist/max.humanpose.js -mc --source-map --output dist/max.humanpose.min.js",
+    "copy": "ncp model dist/model",
+    "build": "npm run clean && npm run rollup && npm run uglify",
+    "test": "standard && echo \"Only code linting currently being run\""
+  },
+  "author": "va barbosa <va@us.ibm.com> (https://github.com/vabarbosa/)",
+  "license": "Apache-2.0",
+  "keywords": [
+    "human pose estimator",
+    "pose detection",
+    "openpose",
+    "model asset exchange",
+    "max",
+    "tensorflow.js",
+    "tensorflowjs",
+    "tensorflow",
+    "tf.js",
+    "tfjs",
+    "machine learning"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CODAIT/max-tfjs-models.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CODAIT/max-tfjs-models/issues"
+  },
+  "homepage": "https://github.com/CODAIT/max-tfjs-models/tree/master/human-pose-estimator#readme",
+  "dependencies": {
+    "@tensorflow/tfjs-node": "1.x"
+  },
+  "devDependencies": {
+    "canvas": "^2.1.0",
+    "jimp": "^0.6.0",
+    "mkdirp": "^0.5.1",
+    "ncp": "^2.0.0",
+    "rimraf": "^2.6.3",
+    "rollup": "^1.6.0",
+    "rollup-plugin-replace": "^2.1.0",
+    "standard": "^12.0.1",
+    "uglify-es": "^3.3.9"
+  },
+  "standard": {
+    "ignore": [
+      "dist"
+    ]
+  }
+}
