@@ -1,6 +1,6 @@
 /* globals tf, Image */
 
-const IMAGESIZE = 512
+const IMAGESIZE = 432
 
 const computeTargetSize = function (width, height) {
   let resizeRatio = IMAGESIZE / Math.max(width, height)
@@ -28,9 +28,12 @@ const getImageData = function (imageInput) {
   }
 }
 
-const imageToTensor = function (imageData) {
+const imageToTensor = function (imageData, mirrorImage = false) {
   return tf.tidy(() => {
-    const imgTensor = tf.browser.fromPixels(imageData)
+    let imgTensor = tf.browser.fromPixels(imageData)
+    if (mirrorImage) {
+      imgTensor = imgTensor.reverse(1)
+    }
     const targetSize = computeTargetSize(imgTensor.shape[0], imgTensor.shape[1])
     return imgTensor
       .resizeBilinear([targetSize.width, targetSize.height])
@@ -43,10 +46,13 @@ const imageToTensor = function (imageData) {
  * convert image to Tensor input required by the model
  *
  * @param {HTMLImageElement} imageInput - the image element
+ * @param {boolean} mirrorImage - horizontally flip image (default: false)
  */
-const preprocess = function (imageInput) {
+const preprocess = function (imageInput, mirrorImage = false) {
   return getImageData(imageInput)
-    .then(imageToTensor)
+    .then(imageData => {
+      return imageToTensor(imageData, mirrorImage)
+    })
     .then(inputTensor => {
       return Promise.resolve(inputTensor)
     })

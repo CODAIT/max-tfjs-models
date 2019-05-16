@@ -7,8 +7,8 @@ if (!process.rollupBrowser) {
   global.tf = require('@tensorflow/tfjs-node')
 }
 
-const processInput = function (inputImage) {
-  return preprocess(inputImage)
+const processInput = function (inputImage, mirrorImage) {
+  return preprocess(inputImage, mirrorImage)
 }
 
 const loadModel = function (init) {
@@ -23,8 +23,8 @@ const processOutput = function (inferenceResults) {
   return postprocess(inferenceResults)
 }
 
-const predict = function (inputImage) {
-  return processInput(inputImage)
+const predict = function (inputImage, mirrorImage) {
+  return processInput(inputImage, mirrorImage)
     .then(runInference)
     .then(processOutput)
     .catch(err => {

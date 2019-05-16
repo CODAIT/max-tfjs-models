@@ -77,11 +77,12 @@ read(imagePath)
 
   Returns the TensorFlow.js model.
 
-- **processInput(_image_)**
+- **processInput(_image_, _mirrorImage_)**
 
-  Processes the input image to the shape and format expected by the model. The image is resized and converted to a 4D Tensor.
+  Processes the input image to the shape and format expected by the model. The image is resized/scaled (to max width or height of 432px) and converted to a 4D Tensor.
 
-  `image` - an instance of HTMLImageElement, HTMLCanvasElement, or HTMLVideoElement.
+  `image` - an instance of HTMLImageElement, HTMLCanvasElement, or HTMLVideoElement.  
+  `mirrorImage` - if `true` the image will be flipped horizontally (e.g., mirrored webcam video). Default is `false`.
 
   Returns a 4D Tensor representation of the image that can be passed to the model.
 
@@ -106,11 +107,12 @@ read(imagePath)
   - `posesDetected`: an array of human poses detected in the image
   - `imageSize`: an object with the width and height of the resized image
 
-- **predict(_image_)**
+- **predict(_image_, _mirrorImage_)**
 
   Loads the model (if not loaded), processes the input image, runs inference, processes the inference output, and returns a prediction object. This is a convenience function to avoid having to call each of the functions (`loadModel`, `processInput`, `runInference`, `processOutput`) individually.
 
-  `image` - an instance of HTMLImageElement, HTMLCanvasElement, or HTMLVideoElement.
+  `image` - an instance of HTMLImageElement, HTMLCanvasElement, or HTMLVideoElement.  
+  `mirrorImage` - if `true` the image will be flipped horizontally (e.g., mirrored webcam video). Default is `false`.
 
   Returns an object containing
 
@@ -136,12 +138,12 @@ read(imagePath)
 
   Available parameters include:
 
-  - `NMSWindowSize`: pixel size when applying non-maximum suppression to calculate peaks (default: 6)
-  - `NMSThreshold`: minimum pixel score required when calculating peaks (default: 0.001)
-  - `LocalPAFThreshold`: minimum part affinity field score when calculating possible pairs (default: 0.141)
-  - `PartScoreThreshold`: minimum part score required when calculating parts (default: 0.247)
-  - `PAFCountThreshold`: minimum part affinity field values when calculating possible pairs (default: 4)
-  - `PartCountThreshold`: minimum parts required when calculating poses (default: 4)
+  - `nmsWindowSize`: pixel size when applying non-maximum suppression to calculate peaks (default: 6)
+  - `nmsThreshold`: minimum pixel score required when calculating peaks (default: 0.001)
+  - `localPAFThreshold`: minimum part affinity field score when calculating possible pairs (default: 0.141)
+  - `partScoreThreshold`: minimum part score required when calculating parts (default: 0.247)
+  - `pafCountThreshold`: minimum part affinity field values when calculating possible pairs (default: 4)
+  - `partCountThreshold`: minimum parts required when calculating poses (default: 4)
 
 
 ## Model

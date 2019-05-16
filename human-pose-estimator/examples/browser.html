@@ -41,7 +41,7 @@
     }
 
     function showImage (image) {
-      const imageSize = 512
+      const imageSize = 432
       const resizeRatio = imageSize / Math.max(image.width, image.height)
       let width = Math.round(resizeRatio * image.width)
       let height = Math.round(resizeRatio * image.height)
@@ -63,7 +63,6 @@
     function showPoses (prediction) {
       let poses = prediction.posesDetected
       message(`${poses.length} pose(s) were detected`)
-
 
       let canvasPoses = document.getElementById('canvasposes')
       canvasPoses.width = prediction.imageSize.width
@@ -97,12 +96,12 @@
         disableElements()
         message('running prediction...')
         // poseEstimator.config({
-        //   NMSWindowSize: 10,
-        //   NMSThreshold: 0.001,
-        //   LocalPAFThreshold: 0.141,
-        //   PartScoreThreshold: 0.247,
-        //   PAFCountThreshold: 4,
-        //   PartCountThreshold: 4
+        //   nmsWindowSize: 6,
+        //   nmsThreshold: 0.001,
+        //   localPAFThreshold: 0.141,
+        //   partScoreThreshold: 0.247,
+        //   pafCountThreshold: 4,
+        //   partCountThreshold: 4
         // })
         poseEstimator.predict(imageSource)
           .then(showPoses)

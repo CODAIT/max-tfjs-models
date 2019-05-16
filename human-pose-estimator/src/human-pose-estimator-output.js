@@ -7,30 +7,19 @@ const PafMapCount = 38
 const MaxPairCount = 17
 const DIMFACTOR = 8
 
-let NMSWindowSize = 6
-let NMSThreshold = 0.001
-let LocalPAFThreshold = 0.141
-let PartScoreThreshold = 0.247
-let PAFCountThreshold = 4
-let PartCountThreshold = 4
+const DEFAULTCONFIG = {
+  nmsWindowSize: 6,
+  nmsThreshold: 0.001,
+  localPAFThreshold: 0.141,
+  partScoreThreshold: 0.247,
+  pafCountThreshold: 4,
+  partCountThreshold: 4
+}
+
+let cfg = Object.assign({}, DEFAULTCONFIG)
 
 const configuration = function (config) {
-  if (typeof config === 'object') {
-    NMSWindowSize = config['NMSWindowSize'] || NMSWindowSize
-    NMSThreshold = config['NMSThreshold'] || NMSThreshold
-    LocalPAFThreshold = config['LocalPAFThreshold'] || LocalPAFThreshold
-    PartScoreThreshold = config['PartScoreThreshold'] || PartScoreThreshold
-    PAFCountThreshold = config['PAFCountThreshold'] || PAFCountThreshold
-    PartCountThreshold = config['PartCountThreshold'] || PartCountThreshold
-  }
-  return {
-    NMSWindowSize: NMSWindowSize,
-    NMSThreshold: NMSThreshold,
-    LocalPAFThreshold: LocalPAFThreshold,
-    PartScoreThreshold: PartScoreThreshold,
-    PAFCountThreshold: PAFCountThreshold,
-    PartCountThreshold: PartCountThreshold
-  }
+  cfg = Object.assign({}, DEFAULTCONFIG, (typeof config === 'object' ? config : {}))
 }
 
 const estimatePoses = function (heatmapTensor, pafmapTensor) {
@@ -64,7 +53,7 @@ const computeParts = function (heatmap) {
           parts[d] = []
         }
         const score = heatmap.get(y, x, d)
-        if (score > NMSThreshold && isMaximum(score, y, x, d, heatmap)) {
+        if (score > cfg.nmsThreshold && isMaximum(score, y, x, d, heatmap)) {
           parts[d].push([y, x, score])
         }
       }
@@ -79,10 +68,10 @@ const isMaximum = function (score, y, x, d, heatmap) {
   let height = heatmap.shape[0]
   let width = heatmap.shape[1]
 
-  const h1 = Math.max(0, y - NMSWindowSize)
-  const h2 = Math.min(height - 1, y + NMSWindowSize)
-  const w1 = Math.max(0, x - NMSWindowSize)
-  const w2 = Math.min(width - 1, x + NMSWindowSize)
+  const h1 = Math.max(0, y - cfg.nmsWindowSize)
+  const h2 = Math.min(height - 1, y + cfg.nmsWindowSize)
+  const w1 = Math.max(0, x - cfg.nmsWindowSize)
+  const w2 = Math.min(width - 1, x + cfg.nmsWindowSize)
 
   for (var h = h1; h <= h2; h++) {
     for (var w = w1; w <= w2; w++) {
@@ -117,7 +106,7 @@ const computePairs = function (pafmap, parts) {
         let score = val.score
         let count = val.count
 
-        if (score > PartScoreThreshold && count >= PAFCountThreshold) {
+        if (score > cfg.partScoreThreshold && count >= cfg.pafCountThreshold) {
           let inserted = false
 
           for (var l = 0; l < MaxPairCount; l++) {
@@ -170,7 +159,7 @@ const getPairScore = function (x1, y1, x2, y2, pafmap, cpnetwork) {
         let s = vy * pafmap.get(ty, tx, cpnetwork[1]) +
                 vx * pafmap.get(ty, tx, cpnetwork[0])
 
-        if (s > LocalPAFThreshold) {
+        if (s > cfg.localPAFThreshold) {
           count++
           score += s
         }
@@ -254,7 +243,7 @@ const formatResponse = function (humans) {
     }
 
     // only include poses with enough parts
-    if (bodyPartCount > PartCountThreshold) {
+    if (bodyPartCount > cfg.partCountThreshold) {
       let pList = humans[i].partsList
       let poseLines = []
 
