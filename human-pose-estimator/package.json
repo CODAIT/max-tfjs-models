@@ -1,6 +1,6 @@
 {
   "name": "@codait/max-human-pose-estimator",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "Detect humans in an image and estimate the pose for each person.",
   "main": "dist/max.humanpose.cjs.js",
   "module": "dist/max.humanpose.es.js",
@@ -14,7 +14,7 @@
     "build": "npm run clean && npm run rollup && npm run uglify",
     "test": "standard && echo \"Only code linting currently being run\""
   },
-  "author": "va barbosa <va@us.ibm.com> (https://github.com/vabarbosa/)",
+  "author": "va barbosa (https://github.com/vabarbosa/)",
   "license": "Apache-2.0",
   "keywords": [
     "human pose estimator",
