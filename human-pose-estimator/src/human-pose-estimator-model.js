@@ -5,7 +5,7 @@ let modelPath = null
 if (!process.rollupBrowser) {
   modelPath = `file://${__dirname}/../model/model.json`
 } else {
-  modelPath = 'http://max-assets.s3.us.cloud-object-storage.appdomain.cloud/max-human-pose-estimator/tf_js/0.1/model.json'
+  modelPath = 'https://max-assets.s3.us.cloud-object-storage.appdomain.cloud/max-human-pose-estimator/tf_js/0.1/model.json'
 }
 
 let model = null
