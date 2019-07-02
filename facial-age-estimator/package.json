@@ -1,0 +1,40 @@
+{
+  "name": "@codait/facial-age-estimator",
+  "version": "0.1.0",
+  "description": "Estimate the age of a face.",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "node -r esm test/test.js"
+  },
+  "author": "Daniel Jalova (https://github.com/djalova)",
+  "license": "Apache-2.0",
+  "keywords": [
+    "age estimator",
+    "model asset exchange",
+    "max",
+    "tensorflow.js",
+    "tensorflowjs",
+    "tensorflow",
+    "tf.js",
+    "tfjs",
+    "machine learning"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CODAIT/max-tfjs-models.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CODAIT/max-tfjs-models/issues"
+  },
+  "homepage": "https://github.com/CODAIT/max-tfjs-models/tree/master/facial-age-estimator#readme",
+  "dependencies": {
+    "@tensorflow/tfjs-node": "1.x"
+  },
+  "devDependencies": {
+    "canvas": "^2.5.0",
+    "jimp": "^0.6.4"
+  }
+}
