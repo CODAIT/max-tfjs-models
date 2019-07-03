@@ -1,5 +1,4 @@
 /* globals tf */
-import * as tf from '@tensorflow/tfjs-node'
 
 let modelPath = null
 
@@ -17,11 +16,8 @@ let warmed = false
  */
 const load = function (initialize) {
   if (!model) {
-    console.log('loading model...')
-    // console.time('model load')
     return tf.loadGraphModel(modelPath)
       .then(m => {
-        // console.timeEnd('model load')
         model = m
         if (istrue(initialize)) {
           warmup()
@@ -29,7 +25,6 @@ const load = function (initialize) {
         return Promise.resolve(model)
       })
       .catch(err => {
-        // console.timeEnd('model load')
         console.error(err)
         return Promise.reject(err)
       })

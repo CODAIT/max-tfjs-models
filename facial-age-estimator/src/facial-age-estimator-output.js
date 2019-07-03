@@ -2,7 +2,7 @@
 
 const postprocess = function (inferenceResults) {
   return inferenceResults.array()
-    .then(ages => ages.map(tensor => tensor[0]));
+    .then(ages => ages.map(tensor => tensor[0]))
 }
 
 export { postprocess }

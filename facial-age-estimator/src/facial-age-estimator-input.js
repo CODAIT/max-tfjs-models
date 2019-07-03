@@ -43,11 +43,11 @@ const imageToTensor = function (imageData) {
  * @param {HTMLImageElement} imageInput - the image element
  */
 const preprocess = function (imageInput) {
-  let imageArray = [].concat(imageInput || []);
+  let imageArray = [].concat(imageInput || [])
 
   return Promise.all(imageArray.map(getImageData))
     .then(canvases => canvases.map(imageToTensor))
-    .then(tensorArray => tf.concat(tensorArray))  
+    .then(tensorArray => tf.concat(tensorArray))
 }
 
 export { preprocess }
