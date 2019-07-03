@@ -38,7 +38,7 @@ const imageToTensor = function (imageData) {
 }
 
 /**
- * convert image to Tensor input required by the model
+ * Convert image(s) to Tensor input required by the model
  *
  * @param {HTMLImageElement} imageInput - the image element
  */

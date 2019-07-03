@@ -26,7 +26,7 @@ When installing for a Node.js environment, the `node-gyp` module will need to ge
 
 ### Browser
 
-> **Note**: _When loaded in a browser, the global variable `poseEstimator` will be available to access the API._
+> **Note**: _When loaded in a browser, the global variable `ageEstimator` will be available to access the API._
 
 ```javascript
 let image = document.getElementById('my-image')
