@@ -1,6 +1,6 @@
-import { preprocess } from '../src/facial-age-estimator-input'
-import { load, inference } from '../src/facial-age-estimator-model'
-import { postprocess } from '../src/facial-age-estimator-output'
+import { preprocess } from './facial-age-estimator-input'
+import { load, inference } from './facial-age-estimator-model'
+import { postprocess } from './facial-age-estimator-output'
 
 if (!process.rollupBrowser) {
   global.tf = require('@tensorflow/tfjs-node')

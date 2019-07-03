@@ -1,6 +1,6 @@
-# MAX for TensorFlow.js: Human Pose Estimator
+# MAX for TensorFlow.js: Facial Age Estimator
 
-This is a TensorFlow.js port of the [MAX Human Pose Estimator](https://github.com/IBM/MAX-Facial-Age-Estimator) pre-trained model. The Human Pose Estimator was trained to detect humans in an image and identifies the body parts, including nose, neck, eyes, shoulders, elbows, wrists, hips, knees, and ankles..
+This is a TensorFlow.js port of the [MAX Facial Age Estimator](https://github.com/IBM/MAX-Facial-Age-Estimator) pre-trained model. The Facial Age Estimator extracts facial features for each face given as input and predicts the age of each face.
 
 ## Install
 
@@ -84,7 +84,7 @@ read(imagePath)
 
 - **runInference(_inputTensor_)**
 
-  Runs inference on the input Tensor passed. The output is 4D Tensor comprised of the concatenation of the heatmap and part affinity field map predictions
+  Runs inference on the input Tensor passed. The output is 1D tensor containing the predicted ages.
 
   `inputTensor` - a 4D Tensor representing an ImageData or array of ImageData
 
@@ -106,7 +106,7 @@ read(imagePath)
 
 ## Model
 
-The model assets produced by converting the pre-trained model to the TensorFlow.js format can be found in the [`/model`](https://github.com/CODAIT/max-tfjs-models/tree/master/human-facial-age-estimator/model) directory.
+The model assets produced by converting the pre-trained model to the TensorFlow.js format can be found in the [`/model`](https://github.com/CODAIT/max-tfjs-models/tree/master/facial-age-estimator/model) directory.
 
 ## Resources
 
