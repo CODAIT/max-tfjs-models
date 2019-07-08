@@ -41,7 +41,7 @@ ageEsimator
 ### Node.js
 
 ```javascript
-const { predict } = require('@codait/max-human-pose-estimator')
+const { predict } = require('@codait/max-facial-age-estimator')
 const { read, MIME_PNG } = require('jimp')
 const { createCanvas, loadImage } = require('canvas')
 
