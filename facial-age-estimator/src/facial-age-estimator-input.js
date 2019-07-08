@@ -1,5 +1,4 @@
 /* globals tf, Image */
-import * as tf from '@tensorflow/tfjs-node'
 
 const IMAGESIZE = 64
 

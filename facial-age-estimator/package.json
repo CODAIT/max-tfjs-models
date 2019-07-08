@@ -2,11 +2,19 @@
   "name": "@codait/facial-age-estimator",
   "version": "0.1.0",
   "description": "Estimate the age of a face.",
-  "main": "index.js",
+  "main": "dist/max.ageest.cjs.js",
+  "module": "dist/max.ageest.es.js",
+  "jsdelivr": "dist/max.ageest.min.js",
+  "unpkg": "dist/max.ageest.min.js",
   "directories": {
     "example": "examples"
   },
   "scripts": {
+    "clean": "rimraf dist && mkdirp dist",
+    "rollup": "rollup --config rollup.config.js",
+    "uglify": "uglifyjs dist/max.ageest.js -mc --source-map --output dist/max.ageest.min.js",
+    "copy": "ncp model dist/model",
+    "build": "npm run clean && npm run rollup && npm run uglify",
     "test": "node -r esm test/test.js"
   },
   "author": "Daniel Jalova (https://github.com/djalova)",
@@ -35,6 +43,11 @@
   },
   "devDependencies": {
     "canvas": "^2.5.0",
-    "jimp": "^0.6.4"
+    "jimp": "^0.6.4",
+    "mkdirp": "^0.5.1",
+    "rimraf": "^2.6.3",
+    "rollup": "^1.16.6",
+    "rollup-plugin-replace": "^2.2.0",
+    "uglify-es": "^3.3.9"
   }
 }
