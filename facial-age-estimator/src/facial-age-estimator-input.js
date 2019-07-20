@@ -30,7 +30,7 @@ const getImageData = function (imageInput) {
 
 const imageToTensor = function (imageData) {
   return tf.tidy(() => {
-    const imgTensor = tf.browser.fromPixels(imageData)
+    const imgTensor = tf.browser.fromPixels(imageData).toFloat()
     const targetSize = computeTargetSize(imgTensor.shape[0], imgTensor.shape[1])
     return imgTensor.resizeBilinear([targetSize.width, targetSize.height]).expandDims()
   })
