@@ -2,6 +2,7 @@ import { preprocess } from './image-segmenter-input.js'
 import { load, inference } from './image-segmenter-model.js'
 import { postprocess } from './image-segmenter-output.js'
 import { labels as labelsMap, colors as colorsMap } from './image-segmenter-map.js'
+import { version } from '../package.json'
 
 if (!process.rollupBrowser) {
   global.tf = require('@tensorflow/tfjs-node')
@@ -39,5 +40,6 @@ export {
   runInference,
   processOutput,
   labelsMap,
-  colorsMap
+  colorsMap,
+  version
 }

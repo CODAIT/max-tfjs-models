@@ -127,6 +127,10 @@ read(imagePath)
 
   An array of RGB color values that can be used to map each object to a specific color.
 
+- **version**
+
+  Returns the version
+
 ## Model
 
 The model assets produced by converting the pre-trained model to the TensorFlow.js format can be found in the [`/model`](https://github.com/CODAIT/max-tfjs-models/tree/master/image-segmenter/model) directory.
