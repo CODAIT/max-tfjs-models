@@ -1,45 +1,42 @@
-import { processInput, runInference, processOutput, predict } from '../src/facial-age-estimator'
+const jimp = require('jimp');
+const nodeCanvas = require('canvas');
+const ageEstimator = require('../dist/max.ageest.cjs.js');
 
-import { read, MIME_PNG } from 'jimp'
-import { createCanvas, loadImage } from 'canvas'
+const imagePath = `${__dirname}/face.jpg`
 
 const createCanvasElement = function (imageInput) {
   return new Promise(async (resolve, reject) => {
-    const img = await loadImage(imageInput)
-    let canvas = createCanvas(img.width, img.height)
+    const img = await nodeCanvas.loadImage(imageInput)
+    let canvas = nodeCanvas.createCanvas(img.width, img.height)
     let ctx = canvas.getContext('2d')
     await ctx.drawImage(img, 0, 0)
     resolve(canvas)
   })
 }
 
-const imagePath = `${__dirname}/face.jpg`
+describe("A suite", function() {
 
-// TODO Refactor this using an actual testing framework
-// Test single image inputs
-read(imagePath)
-  .then(imageData => imageData.getBufferAsync(MIME_PNG))
-  .then(imageBuffer => createCanvasElement(imageBuffer))
-  .then(imageElement => processInput(imageElement))
-  .then(input => runInference(input))
-  .then(output => processOutput(output))
-  .then(ages => console.log(ages))
+  const input = jimp.read(imagePath)
+    .then(imageData => imageData.getBufferAsync(jimp.MIME_PNG))
+    .then(imageBuffer => createCanvasElement(imageBuffer))
 
-read(imagePath)
-  .then(imageData => imageData.getBufferAsync(MIME_PNG))
-  .then(imageBuffer => createCanvasElement(imageBuffer))
-  .then(imageElement => predict(imageElement))
-  .then(ages => console.log(ages))
 
-// Test multiple image inputs
-read(imagePath)
-  .then(imageData => imageData.getBufferAsync(MIME_PNG))
-  .then(imageBuffer => createCanvasElement(imageBuffer))
-  .then(imageElement => {
-    let input = [imageElement, imageElement]
-    console.log(input)
-    return processInput(input)
+  it("processInput, runInference, and processOutput", function() {
+    return input.then(imageElement => ageEstimator.processInput(imageElement))
+      .then(input => ageEstimator.runInference(input))
+      .then(output => ageEstimator.processOutput(output))
+      .then(result => expect(result[0]).toBeCloseTo(36, 0));
+  });
+
+  it("predict function works", function() {
+    return input.then(imageElement => ageEstimator.predict(imageElement))
+      .then(result => expect(result[0]).toBeCloseTo(36, 0));
   })
-  .then(input => runInference(input))
-  .then(output => processOutput(output))
-  .then(ages => console.log(ages))
+
+  it("multiple array works", function() {
+    return input.then(imageElement => ageEstimator.processInput([imageElement, imageElement]))
+    .then(input => ageEstimator.runInference(input))
+    .then(output => ageEstimator.processOutput(output))
+    .then(result => expect(result.length).toEqual(2));
+  })
+});

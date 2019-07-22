@@ -15,7 +15,7 @@
     "uglify": "uglifyjs dist/max.ageest.js -mc --source-map --output dist/max.ageest.min.js",
     "copy": "ncp model dist/model",
     "build": "npm run clean && npm run rollup && npm run uglify",
-    "test": "node -r esm test/test.js"
+    "test": "npm run build && jasmine test/test.js"
   },
   "author": "Daniel Jalova (https://github.com/djalova)",
   "license": "Apache-2.0",
@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "canvas": "^2.5.0",
+    "jasmine": "^3.4.0",
     "jimp": "^0.6.4",
     "mkdirp": "^0.5.1",
     "rimraf": "^2.6.3",
