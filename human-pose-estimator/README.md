@@ -145,6 +145,9 @@ read(imagePath)
   - `pafCountThreshold`: minimum part affinity field values when calculating possible pairs (default: 4)
   - `partCountThreshold`: minimum parts required when calculating poses (default: 4)
 
+- **version**
+
+  Returns the version
 
 ## Model
 

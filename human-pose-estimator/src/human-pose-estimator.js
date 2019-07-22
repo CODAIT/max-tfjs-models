@@ -2,6 +2,7 @@ import { preprocess } from './human-pose-estimator-input.js'
 import { load, inference } from './human-pose-estimator-model.js'
 import { postprocess, configuration } from './human-pose-estimator-output.js'
 import { cocoParts, cocoPairs, cocoPairsNetwork, cocoColors } from './human-pose-estimator-coco.js'
+import { version } from '../package.json'
 
 if (!process.rollupBrowser) {
   global.tf = require('@tensorflow/tfjs-node')
@@ -50,5 +51,6 @@ export {
   processInput,
   runInference,
   processOutput,
-  cocoUtil
+  cocoUtil,
+  version
 }

@@ -1,4 +1,13 @@
 import replace from 'rollup-plugin-replace'
+import json from 'rollup-plugin-json'
+
+const jsonPlugin = json({
+  include: 'package.json',
+  preferConst: true,
+  indent: '  ',
+  compact: true,
+  namedExports: ['version']
+})
 
 export default [
   {
@@ -20,7 +29,8 @@ export default [
     plugins: [
       replace({
         'process.rollupBrowser': true
-      })
+      }),
+      jsonPlugin
     ]
   }, {
     input: 'src/human-pose-estimator.js',
@@ -35,7 +45,8 @@ export default [
     plugins: [
       replace({
         'process.rollupBrowser': false
-      })
+      }),
+      jsonPlugin
     ]
   }
 ]
