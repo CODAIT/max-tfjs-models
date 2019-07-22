@@ -75,7 +75,9 @@ const inference = function (imageTensor) {
 
 const warmup = function () {
   try {
-    run(tf.zeros([1, 512, 512, 3]))
+    tf.tify(() => {
+      run(tf.zeros([1, 512, 512, 3]))
+    })
   } catch (err) { }
 }
 

@@ -1,5 +1,5 @@
 // const { predict } = require('@codait/max-image-segmenter')
-const { predict } = require('../dist/max.imgseg.cjs.js')
+const { predict, version } = require('../dist/max.imgseg.cjs.js')
 
 const { read, MIME_PNG } = require('jimp')
 const { createCanvas, loadImage } = require('canvas')
@@ -18,6 +18,7 @@ if (process.argv.length < 3) {
   console.log('please pass an image to process. ex:')
   console.log('  node app.js /path/to/image.jpg')
 } else {
+  console.log(`@codait/max-image-segmenter v${version}`)
   let imagePath = process.argv[2]
 
   read(imagePath)
@@ -26,6 +27,6 @@ if (process.argv.length < 3) {
     .then(imageElement => predict(imageElement))
     .then(prediction => {
       // console.log(prediction.segmentationMap)
-      console.log(prediction.objectsDetected)
+      console.log(`the following object(s) were detected: ${prediction.objectsDetected}`)
     })
 }
