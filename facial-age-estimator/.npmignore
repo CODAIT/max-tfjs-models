@@ -9,3 +9,4 @@ conversion-manifest.json
 src/
 node_modules/
 /examples
+test/
