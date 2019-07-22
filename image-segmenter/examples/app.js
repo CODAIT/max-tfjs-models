@@ -1,4 +1,4 @@
-// const { predict } = require('@codait/max-image-segmenter')
+// const { predict, version } = require('@codait/max-image-segmenter')
 const { predict, version } = require('../dist/max.imgseg.cjs.js')
 
 const { read, MIME_PNG } = require('jimp')

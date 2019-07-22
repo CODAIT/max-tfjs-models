@@ -1,6 +1,7 @@
 <html>
   <head>
-    <title>human-pose-estimator</title>
+    <meta charset="utf-8">
+    <title>human-pose-estimator // image</title>
   </head>
   <script>
     let imageSource
@@ -110,23 +111,19 @@
       }
     }
 
-    // load model and warm up the cache so subsequent predictions run faster
-    function loadModel () {
-      disableElements()
-      message('loading model. this may take a few seconds...')
-      poseEstimator.loadModel()
-        .then(function () {
-          message('model loaded')
-          enableElements()
-          return poseEstimator.predict(new Image(1,1))
-        })
-        .catch(message)
-        .then(enableElements)
+    const init = function () {
+      message(`@codait/max-image-segmenter v${poseEstimator.version}`)
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init)
+    } else {
+      init()
     }
   </script>
   <body>
     <div style="margin: 20px;">
-      <h1>human-pose-estimator</h1>
+      <h1>human-pose-estimator // image</h1>
       <div style="padding: 10px;">
         <input id="modelimage" type="file" name="filename" accept="image/gif, image/jpeg, image/png" onchange="loadImage(this);">
         <button id="modelrun" onclick="runModel();">run inference</button>

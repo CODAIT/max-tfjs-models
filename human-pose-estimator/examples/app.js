@@ -1,5 +1,5 @@
-// const { predict } = require('@codait/max-human-pose-estimator')
-const { predict } = require('../dist/max.humanpose.cjs.js')
+// const { predict, version } = require('@codait/max-human-pose-estimator')
+const { predict, version } = require('../dist/max.humanpose.cjs.js')
 
 const { read, MIME_PNG } = require('jimp')
 const { createCanvas, loadImage } = require('canvas')
@@ -18,6 +18,7 @@ if (process.argv.length < 3) {
   console.log('please pass an image to process. ex:')
   console.log('  node app.js /path/to/image.jpg')
 } else {
+  console.log(`@codait/max-human-pose-estimator v${version}`)
   let imagePath = process.argv[2]
 
   read(imagePath)

@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>image-segmenter // video</title>
+    <title>human-pose-estimator // video</title>
     <style>
       canvas {
         /* mirror output */
@@ -57,7 +57,7 @@
       if (webcamStream) {
         try {
           videoCanvasCtx.drawImage(video, 0, 0, videoCanvas.width, videoCanvas.height)
-          const prediction = await imageSegmenter.predict(videoCanvas)
+          const prediction = await poseEstimator.predict(videoCanvas)
           renderPrediction(prediction)
           requestAnimationFrame(drawVideoToCanvas)
         } catch (e) {
@@ -67,32 +67,29 @@
     }
 
     function renderPrediction (prediction) {
-      let width = prediction.imageSize.width
-      let height = prediction.imageSize.height
-      let segments = prediction.segmentationMap
-      let colors = imageSegmenter.colorsMap
+      let poses = prediction.posesDetected
+      let canvasPoses = document.getElementById('canvasposes')
+      canvasPoses.width = prediction.imageSize.width
+      canvasPoses.height = prediction.imageSize.height
+      let canvasPosesCtx = canvasPoses.getContext('2d')
 
-      let data = []
-      for (var j = 0; j < height; j++) {
-        for (var i = 0; i < width; i++) {
-          let s = segments[j][i]
-          data.push(colors[s][0]) // red
-          data.push(colors[s][1]) // green
-          data.push(colors[s][2]) // blue
-          data.push(175) // alpha
-        }
+      // draw poses
+      const colors = poseEstimator.cocoUtil.colors
+      for (var i = 0; i < poses.length; i++) {
+        poses[i].poseLines.forEach((l, j) => {
+          let color = `rgb(${colors[j].join()})`
+          drawLine(canvasPosesCtx, ...l, color)
+        })
       }
+    }
 
-      let imageData = new ImageData(width, height)
-      imageData.data.set(data)
-
-      let canvas = document.getElementById('canvassegments')
-      canvas.width = width
-      canvas.height = height
-
-      let ctx = canvas.getContext('2d')
-      ctx.clearRect(0, 0, width, height)
-      ctx.putImageData(imageData, 0, 0)
+    function drawLine (canvasCtx, x1, y1, x2, y2, c = 'black') {
+      canvasCtx.beginPath()
+      canvasCtx.moveTo(x1, y1)
+      canvasCtx.lineTo(x2, y2)
+      canvasCtx.lineWidth = 2
+      canvasCtx.strokeStyle = c
+      canvasCtx.stroke()
     }
 
     function message (msg) {
@@ -102,7 +99,7 @@
     }
 
     const init = function () {
-      message(`@codait/max-image-segmenter v${imageSegmenter.version}`)
+      message(`@codait/max-image-segmenter v${poseEstimator.version}`)
     }
 
     if (document.readyState === 'loading') {
@@ -113,22 +110,22 @@
   </script>
   <body>
     <div style="margin: 20px;">
-      <h1>image-segmenter // video</h1>
+      <h1>human-pose-estimator // video</h1>
       <div style="padding: 10px;">
         <button id="startwebcam" onclick="startWebcam();">Start webcam</button>
       </div>
       
       <div style="padding: 10px;">
         <div id="capimg" style="position:relative;display:inline-block;min-width:600px;vertical-align:top;">
-          <canvas id="canvasvideo" width="512", height="384" style="z-index:1; position:absolute; left:0px; top:0px;"></canvas>
-          <canvas id="canvassegments" style="z-index:2; position:absolute; left:0px; top:0px;"></canvas>
+          <canvas id="canvasvideo" width="432", height="328" style="z-index:1; position:absolute; left:0px; top:0px;"></canvas>
+          <canvas id="canvasposes" style="z-index:3; position:absolute; left:0px; top:0px;"></canvas>
         </div>
         <div id="message" style="position:relative;display:inline-block;"></div>
       </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0"></script>
-    <script src="/dist/max.imgseg.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/@codait/max-image-segmenter"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.1.2"></script>
+    <script src="/dist/max.humanpose.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@codait/max-human-pose-estimator"></script> -->
   </body>
 </html>
