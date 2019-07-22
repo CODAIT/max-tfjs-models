@@ -23,6 +23,7 @@ When installing for a Node.js environment, the `node-gyp` module will need to ge
 
 ## Usage
 
+The complete examples for browser and Node.js environments are in the [`/examples`](https://github.com/CODAIT/max-tfjs-models/tree/master/facial-age-estimator/examples) directory.
 
 ### Browser
 
