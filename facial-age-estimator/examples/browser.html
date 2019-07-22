@@ -72,19 +72,6 @@
       }
     }
 
-    // load model and warm up the cache so subsequent predictions run faster
-    function loadModel () {
-      disableElements()
-      message('loading model. this may take a few seconds...')
-      ageEstimator.loadModel()
-        .then(function () {
-          message('model loaded')
-          enableElements()
-          return ageEstimator.predict(new Image(1,1))
-        })
-        .catch(message)
-        .then(enableElements)
-    }
   </script>
   <body>
     <div style="margin: 20px;">
