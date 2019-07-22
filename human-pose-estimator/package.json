@@ -1,6 +1,6 @@
 {
   "name": "@codait/max-human-pose-estimator",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Detect humans in an image and estimate the pose for each person.",
   "main": "dist/max.humanpose.cjs.js",
   "module": "dist/max.humanpose.es.js",
@@ -38,7 +38,7 @@
   },
   "homepage": "https://github.com/CODAIT/max-tfjs-models/tree/master/human-pose-estimator#readme",
   "dependencies": {
-    "@tensorflow/tfjs-node": "1.x"
+    "@tensorflow/tfjs-node": "^1.2.4"
   },
   "devDependencies": {
     "canvas": "^2.1.0",
@@ -46,7 +46,7 @@
     "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",
     "rimraf": "^2.6.3",
-    "rollup": "^1.6.0",
+    "rollup": "^1.17.0",
     "rollup-plugin-replace": "^2.1.0",
     "standard": "^12.0.1",
     "uglify-es": "^3.3.9"
