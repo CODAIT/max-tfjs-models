@@ -1,5 +1,4 @@
-import * as tf from '@tensorflow/tfjs-node'
-import { loadModel, processInput, runInference, processOutput, predict } from '../src/facial-age-estimator'
+import { processInput, runInference, processOutput, predict } from '../src/facial-age-estimator'
 
 import { read, MIME_PNG } from 'jimp'
 import { createCanvas, loadImage } from 'canvas'
