@@ -1,3 +1,4 @@
+import { version } from '../package.json'
 import { preprocess } from './facial-age-estimator-input'
 import { load, inference } from './facial-age-estimator-model'
 import { postprocess } from './facial-age-estimator-output'
@@ -32,6 +33,7 @@ const predict = function (inputImage) {
 }
 
 export {
+  version,
   predict,
   loadModel,
   processInput,

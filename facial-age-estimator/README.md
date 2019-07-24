@@ -104,6 +104,9 @@ read(imagePath)
 
   `image` - an instance or array of HTMLImageElement, HTMLCanvasElement, or HTMLVideoElement.  
 
+- **version**
+
+  Returns the version.
 
 ## Model
 

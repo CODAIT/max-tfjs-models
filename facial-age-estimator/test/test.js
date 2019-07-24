@@ -19,27 +19,31 @@ describe('Facial Age Estimator', function () {
     .then(imageData => imageData.getBufferAsync(jimp.MIME_PNG))
     .then(imageBuffer => createCanvasElement(imageBuffer))
 
-  it('processInput creates tensor', function () {
+  it('version returns a valid version number', function() {
+    expect(ageEstimator.version).toMatch(/(\d+\.){2}(\d+)/)
+  })
+
+  it('processInput() creates tensor', function () {
     return input.then(imageElement => ageEstimator.processInput(imageElement))
       .then(result => expect(result.shape).toEqual([1, 64, 64, 3]))
   })
 
-  it('runInference works on input', function () {
+  it('runInference() works on input', function () {
     return ageEstimator.runInference(tf.zeros([1, 64, 64, 3]))
       .then(result => expect(result).toEqual(jasmine.any(tf.Tensor)))
   })
 
-  it('processOuput converts tensor into array', function () {
+  it('processOuput() converts tensor into array', function () {
     return ageEstimator.processOutput(tf.tensor([[25], [30]]))
       .then(result => expect(result).toEqual([25, 30]))
   })
 
-  it('predict function works on single input', function () {
+  it('predict() function works on single input', function () {
     return input.then(imageElement => ageEstimator.predict(imageElement))
       .then(result => expect(result[0]).toBeCloseTo(36, 0))
   })
 
-  it('predict function works on array input', function () {
+  it('predict() function works on array input', function () {
     return input.then(imageElement => ageEstimator.processInput([imageElement, imageElement]))
       .then(input => ageEstimator.runInference(input))
       .then(output => ageEstimator.processOutput(output))
