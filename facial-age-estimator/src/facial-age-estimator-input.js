@@ -3,11 +3,12 @@
 const IMAGESIZE = 64
 
 const computeTargetSize = function (width, height) {
-  let resizeRatio = IMAGESIZE / Math.max(width, height)
+  let widthResizeRatio = IMAGESIZE / width
+  let heightResizeRatio = IMAGESIZE / height
 
   return {
-    width: Math.round(resizeRatio * width),
-    height: Math.round(resizeRatio * height)
+    width: Math.round(widthResizeRatio * width),
+    height: Math.round(heightResizeRatio * height)
   }
 }
 
