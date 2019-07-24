@@ -14,6 +14,8 @@ const createCanvasElement = function (imageInput) {
   })
 }
 
+/* eslint-disable no-undef */
+
 describe('Facial Age Estimator', function () {
   const input = jimp.read(imagePath)
     .then(imageData => imageData.getBufferAsync(jimp.MIME_PNG))
@@ -50,3 +52,4 @@ describe('Facial Age Estimator', function () {
       .then(result => expect(result.length).toEqual(2))
   })
 })
+/* eslint-enable no-undef */
