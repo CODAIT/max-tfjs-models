@@ -15,7 +15,6 @@ const createCanvasElement = function (imageInput) {
 }
 
 /* eslint-disable no-undef */
-
 describe('Facial Age Estimator', function () {
   const input = jimp.read(imagePath)
     .then(imageData => imageData.getBufferAsync(jimp.MIME_PNG))
@@ -35,17 +34,17 @@ describe('Facial Age Estimator', function () {
       .then(result => expect(result).toEqual(jasmine.any(tf.Tensor)))
   })
 
-  it('processOuput() converts tensor into array', function () {
+  it('processOutput() converts tensor into array', function () {
     return ageEstimator.processOutput(tf.tensor([[25], [30]]))
       .then(result => expect(result).toEqual([25, 30]))
   })
 
-  it('predict() function works on single input', function () {
+  it('predict() works on single input', function () {
     return input.then(imageElement => ageEstimator.predict(imageElement))
       .then(result => expect(result[0]).toBeCloseTo(36, 0))
   })
 
-  it('predict() function works on array input', function () {
+  it('predict() works on array input', function () {
     return input.then(imageElement => ageEstimator.processInput([imageElement, imageElement]))
       .then(input => ageEstimator.runInference(input))
       .then(output => ageEstimator.processOutput(output))
