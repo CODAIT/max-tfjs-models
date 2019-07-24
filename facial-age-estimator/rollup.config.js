@@ -1,7 +1,7 @@
 import replace from 'rollup-plugin-replace'
 import json from 'rollup-plugin-json'
 
- const jsonPlugin = json({
+const jsonPlugin = json({
   include: 'package.json',
   preferConst: true,
   indent: '  ',

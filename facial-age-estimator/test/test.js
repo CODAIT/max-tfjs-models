@@ -19,7 +19,7 @@ describe('Facial Age Estimator', function () {
     .then(imageData => imageData.getBufferAsync(jimp.MIME_PNG))
     .then(imageBuffer => createCanvasElement(imageBuffer))
 
-  it('version returns a valid version number', function() {
+  it('version returns a valid version number', function () {
     expect(ageEstimator.version).toMatch(/(\d+\.){2}(\d+)/)
   })
 
