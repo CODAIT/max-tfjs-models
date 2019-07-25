@@ -32,7 +32,7 @@ The complete examples for browser and Node.js environments are in the [`/example
 ```javascript
 let image = document.getElementById('my-image')
 
-ageEsimator
+ageEstimator
   .predict(image)
   .then(prediction => {
     console.log(prediction)
