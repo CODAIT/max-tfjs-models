@@ -5,7 +5,7 @@ let modelPath = null
 if (!process.rollupBrowser) {
   modelPath = `file://${__dirname}/../model/model.json`
 } else {
-  modelPath = 'https://s3.us-south.cloud-object-storage.appdomain.cloud/max-assets-dev/max-facial-age-estimator/tfjs/0.1/model.json'
+  modelPath = 'https://s3.us-south.cloud-object-storage.appdomain.cloud/max-assets-prod/max-facial-age-estimator/tfjs/0.1.0/model.json'
 }
 
 let model = null
