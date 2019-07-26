@@ -1,5 +1,5 @@
 {
-  "name": "@codait/facial-age-estimator",
+  "name": "@codait/max-facial-age-estimator",
   "version": "0.1.0",
   "description": "Estimate the age of a face.",
   "main": "dist/max.ageest.cjs.js",
