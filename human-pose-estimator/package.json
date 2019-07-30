@@ -12,7 +12,7 @@
     "uglify": "uglifyjs dist/max.humanpose.js -mc --source-map --output dist/max.humanpose.min.js",
     "copy": "ncp model dist/model",
     "build": "npm run clean && npm run rollup && npm run uglify",
-    "test": "standard && echo \"Only code linting currently being run\""
+    "test": "standard && npm run build && jasmine test/test.js"
   },
   "files": [
     "dist",
@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "canvas": "^2.1.0",
+    "jasmine": "^3.4.0",
     "jimp": "^0.6.0",
     "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",
