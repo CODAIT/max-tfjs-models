@@ -1,6 +1,6 @@
 # MAX for TensorFlow.js: Image Segmenter
 
-This is a TensorFlow.js port of the [MAX Image Segmenter](https://github.com/IBM/MAX-Image-Segmenter) pre-trained model. The Image Segmenter was trained to identify objects in an image and assigns each pixel of the image to a particular object.
+This is a TensorFlow.js port of the [MAX Image Segmenter](https://developer.ibm.com/exchanges/models/all/max-image-segmenter) pre-trained model. The Image Segmenter was trained to identify objects in an image and assigns each pixel of the image to a particular object.
 
 ## Install
 
@@ -18,8 +18,6 @@ By default when the `@codait/max-image-segmenter` JavaScript module is loaded, t
 ```
 npm install --save @codait/max-image-segmenter
 ```
-
-When installing for a Node.js environment, the `node-gyp` module will need to get built as part of the installation of the `tfjs-node` dependency. Currently, for `node-gyp` to successfully build, Python 2.7 is required.
 
 ## Usage
 
@@ -137,7 +135,7 @@ The model assets produced by converting the pre-trained model to the TensorFlow.
 
 ## Resources
 
-- [MAX Image Segmenter](https://github.com/IBM/MAX-Image-Segmenter)
+- [MAX Image Segmenter](https://developer.ibm.com/exchanges/models/all/max-image-segmenter)
 - [MAX Image Segmenter Web App](https://github.com/IBM/MAX-Image-Segmenter-Web-App)
 - [magicat](https://github.com/CODAIT/magicat)
 - [TensorFlow.js](https://www.tensorflow.org/js/)

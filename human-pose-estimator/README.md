@@ -1,6 +1,6 @@
 # MAX for TensorFlow.js: Human Pose Estimator
 
-This is a TensorFlow.js port of the [MAX Human Pose Estimator](https://github.com/IBM/MAX-Human-Pose-Estimator) pre-trained model. The Human Pose Estimator was trained to detect humans in an image and identifies the body parts, including nose, neck, eyes, shoulders, elbows, wrists, hips, knees, and ankles..
+This is a TensorFlow.js port of the [MAX Human Pose Estimator](https://developer.ibm.com/exchanges/models/all/max-human-pose-estimator) pre-trained model. The Human Pose Estimator was trained to detect humans in an image and identifies the body parts, including nose, neck, eyes, shoulders, elbows, wrists, hips, knees, and ankles.
 
 ## Install
 
@@ -18,8 +18,6 @@ By default when the `@codait/max-human-pose-estimator` JavaScript module is load
 ```
 npm install --save @codait/max-human-pose-estimator
 ```
-
-When installing for a Node.js environment, the `node-gyp` module will need to get built as part of the installation of the `tfjs-node` dependency. Currently, for `node-gyp` to successfully build, Python 2.7 is required.
 
 ## Usage
 
@@ -155,7 +153,7 @@ The model assets produced by converting the pre-trained model to the TensorFlow.
 
 ## Resources
 
-- [MAX Human Pose Estimator](https://github.com/IBM/MAX-Human-Pose-Estimator)
+- [MAX Human Pose Estimator](https://developer.ibm.com/exchanges/models/all/max-human-pose-estimator)
 - [Use your arms to make music](https://developer.ibm.com/patterns/making-music-with-the-max-human-pose-estimator-and-tensorflowjs/)
 - [veremax](https://ibm.biz/veremax)
 - [TensorFlow.js](https://www.tensorflow.org/js/)
