@@ -1,6 +1,6 @@
 # MAX for TensorFlow.js: Text Sentiment Classifier
 
-This is a TensorFlow.js port of the [MAX Human Pose Estimator](https://developer.ibm.com/exchanges/models/all/max-text-sentiment-classifier/) This model is able to detect whether a text fragment leans towards a positive or a negative sentiment.
+This is a TensorFlow.js port of the [MAX Text Sentiment Classifier](https://developer.ibm.com/exchanges/models/all/max-text-sentiment-classifier/) This model is able to detect whether a text fragment leans towards a positive or a negative sentiment.
 
 ## Install
 

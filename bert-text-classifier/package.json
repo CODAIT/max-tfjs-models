@@ -9,10 +9,9 @@
   "scripts": {
     "clean": "rimraf dist && mkdirp dist",
     "rollup": "rollup --config rollup.config.js",
-    "uglify": "uglifyjs dist/max.sentimentclass.js -mc --source-map --output dist/max.humanpose.min.js",
     "copy": "ncp model dist/model",
     "build": "npm run clean && npm run rollup",
-    "test": "standard && npm run build && jasmine test/test.js",
+    "test": "npm run build && jasmine-ts",
     "watch:js": "rollup --config rollup.config.js --watch",
     "watch:ts": "tsc --watch",
     "dev": "concurrently -c \"bgBlue.bold,bgMagenta.bold\" \"npm:watch:js\" \"npm:watch:ts\""
@@ -47,7 +46,7 @@
   "dependencies": {
     "@tensorflow-models/universal-sentence-encoder": "^1.2.1",
     "@tensorflow/tfjs": "^1.5.1",
-    "@tensorflow/tfjs-node": "^1.4.0",
+    "@tensorflow/tfjs-node": "^1.5.1",
     "@types/express": "^4.16.1",
     "@types/tar": "^4.0.3",
     "express": "^4.17.1",
