@@ -1,9 +1,9 @@
 import WordPieceTokenizer from "../tokenization";
 import * as tf from '@tensorflow/tfjs';
-import {fetchModel, untar} from './util';
+import {IORouter} from '@tensorflow/tfjs-core/dist/io/router_registry';
 
-const vocabUrl = 'http://s3.us.cloud-object-storage.appdomain.cloud/bert-sentiment-tfjs/model/vocab.json'
-const modelArch = 'http://s3.us.cloud-object-storage.appdomain.cloud/bert-sentiment-tfjs/model.tgz';
+const vocabUrl = 'https://s3.us-south.cloud-object-storage.appdomain.cloud/max-assets-prod/max-text-sentiment-classifier/tfjs/0.1.0/vocab.json'
+const modelJsonUrl = 'https://s3.us-south.cloud-object-storage.appdomain.cloud/max-assets-prod/max-text-sentiment-classifier/tfjs/0.1.0/model.json'
 
 export default class SentimentAnalysis {
   private _model: tf.GraphModel;
@@ -26,23 +26,19 @@ export default class SentimentAnalysis {
     const tfn = require('@tensorflow/tfjs-node');
     const fs = require('fs');
     const path = require('path');
-    const modelTgz = path.join(`${__dirname}`, '..', '..', '/model/model.tgz');
     const modelJson = path.join(`${__dirname}`,'..', '..', '/model/model.json');
-    // console.log(modelJson);
     const modelDir = path.join(`${__dirname}`, '..', '..','/model');
     if(!fs.existsSync(modelJson)){
-      await fetchModel(modelArch, modelDir);
-      await untar(modelTgz,modelDir);
+      console.log('Downloading Model...');
+      tf.io.registerLoadRouter(tfn.io.http as IORouter);
+      await tf.io.copyModel(modelJsonUrl, 'file://' + modelDir);
     }
-    const fileSystem = require('@tensorflow/tfjs-node/dist/io/file_system');
-    this._model = await tfn.loadGraphModel(fileSystem.fileSystem(modelJson));
-    // console.log(`Model loaded from ${modelJson}.`);
+    this._model = await tfn.loadGraphModel('file://' + modelJson);
   }
 
   async loadTokenizer(){
     this._tokenizer = new WordPieceTokenizer(true);
     await this.tokenizer.init(vocabUrl);
-    // console.log("Tokenizer loaded.")
   }
   /**
  * Classify a text input and return a json object with pos and neg

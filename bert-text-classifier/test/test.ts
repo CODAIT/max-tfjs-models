@@ -1,3 +1,5 @@
+/* globals jasmine, describe, it, expect, tf */
+
 import sa from '../src/text-sentiment-classifier';
 import * as tf from '@tensorflow/tfjs';
 
@@ -59,7 +61,7 @@ describe('Bert Sentiment Classifier', () => {
     });
     beforeEach(function() {
     //   var originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-      jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000;
+      jasmine.DEFAULT_TIMEOUT_INTERVAL = 120000;
     });
 
     it('predict() leans towards pos prediction', async () => {

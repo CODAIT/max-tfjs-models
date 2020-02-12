@@ -1,8 +1,8 @@
 import WordPieceTokenizer from "../tokenization";
 import * as tf from '@tensorflow/tfjs';
 
-const vocabUrl = 'http://s3.us.cloud-object-storage.appdomain.cloud/bert-sentiment-tfjs/model/vocab.json'
-const modelUrl = 'http://s3.us.cloud-object-storage.appdomain.cloud/bert-sentiment-tfjs/model/model.json';
+const vocabUrl = 'https://s3.us-south.cloud-object-storage.appdomain.cloud/max-assets-prod/max-text-sentiment-classifier/tfjs/0.1.0/vocab.json'
+const modelUrl = 'https://s3.us-south.cloud-object-storage.appdomain.cloud/max-assets-prod/max-text-sentiment-classifier/tfjs/0.1.0/model.json';
 
 
 export default class SentimentAnalysis {

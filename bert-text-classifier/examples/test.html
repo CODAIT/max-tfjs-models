@@ -1,14 +1,44 @@
 <meta charset="utf-8"/>
 <html>
-    <head>
-        <title>text classifier</title>
-        <script src="/dist/src/max.sentimentclass.js"></script>
-        <script>
-        textSentimentClassifier.encode("i like strawberries").then(ids => console.log(ids));
-        textSentimentClassifier.predict("i like strawberries").then(res => console.log(res));
-        </script>
-    </head>
-    <body>
-
-    </body>
+  <head>
+  <title>text classifier</title>
+  </head>
+  <body onload=loadModel()>
+    <h1>Text Sentiment Classifier</h1>
+    <div id="div1">
+      <input type="text" id="text_input" name="text_input" value="Enter a sentence.">
+      <input type="button" id="submit_text" value="Analyze">
+    </div>
+    <p>
+      <label for="status">status:</label>
+      <output name="status" id="status">Loading Model...</output>
+    </p>
+  </body>
+  <script src="file://///wsl$/Ubuntu/home/tedchang/pub_git/max-tfjs-models/bert-text-classifier/dist/src/max.sentimentclass.js"></script>
+  <script>
+    const submitButton = document.getElementById("submit_text");
+    const statusElement = document.getElementById('status');
+    submitButton.addEventListener("click", runPredict);
+    function loadModel(){
+      submitButton.setAttribute('disabled','true')
+      textSentimentClassifier.loadModel().then( () =>{
+        submitButton.removeAttribute('disabled');
+        updateStatus("Model Loaded", append=false);
+      })
+    }
+    function updateStatus(msg, append=true) {
+      statusElement.innerHTML += msg;
+      if(!append)
+        statusElement.innerHTML = msg;
+    }
+    async function runPredict(){
+      const text = document.getElementById("text_input").value;
+      textSentimentClassifier.predict(text).then((res) =>{
+        updateStatus(`
+          <br> ${text}
+          <br>Positive &#128512;: ${res['pos'].toFixed(4)}
+          <br>Negative &#128534;: ${res['neg'].toFixed(4)}<br>`);
+      }
+  )}
+  </script>
 </html>
