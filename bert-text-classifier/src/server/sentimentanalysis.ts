@@ -1,9 +1,10 @@
 import WordPieceTokenizer from "../tokenization";
-import * as tf from '@tensorflow/tfjs';
+import * as tf from '@tensorflow/tfjs-node';
 import {IORouter} from '@tensorflow/tfjs-core/dist/io/router_registry';
 
 const vocabUrl = 'https://s3.us-south.cloud-object-storage.appdomain.cloud/max-assets-prod/max-text-sentiment-classifier/tfjs/0.1.0/vocab.json'
 const modelJsonUrl = 'https://s3.us-south.cloud-object-storage.appdomain.cloud/max-assets-prod/max-text-sentiment-classifier/tfjs/0.1.0/model.json'
+tf.io.registerLoadRouter(tf.io.http as IORouter);
 
 export default class SentimentAnalysis {
   private _model: tf.GraphModel;
@@ -23,17 +24,16 @@ export default class SentimentAnalysis {
   }
 
   async loadModel(){
-    const tfn = require('@tensorflow/tfjs-node');
     const fs = require('fs');
     const path = require('path');
     const modelJson = path.join(`${__dirname}`,'..', '..', '/model/model.json');
     const modelDir = path.join(`${__dirname}`, '..', '..','/model');
     if(!fs.existsSync(modelJson)){
       console.log('Downloading Model...');
-      tf.io.registerLoadRouter(tfn.io.http as IORouter);
       await tf.io.copyModel(modelJsonUrl, 'file://' + modelDir);
     }
-    this._model = await tfn.loadGraphModel('file://' + modelJson);
+    const fileSystem = require('@tensorflow/tfjs-node/dist/io/file_system');
+    this._model = await tf.loadGraphModel(fileSystem.fileSystem(modelJson));
   }
 
   async loadTokenizer(){

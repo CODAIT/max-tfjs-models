@@ -45,7 +45,6 @@
   "homepage": "https://github.com/CODAIT/max-tfjs-models/tree/master/bert-text-classifier#readme",
   "dependencies": {
     "@tensorflow-models/universal-sentence-encoder": "^1.2.1",
-    "@tensorflow/tfjs": "^1.5.1",
     "@tensorflow/tfjs-node": "^1.5.1",
     "@types/express": "^4.16.1",
     "@types/tar": "^4.0.3",
