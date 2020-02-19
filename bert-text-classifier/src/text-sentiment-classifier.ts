@@ -19,7 +19,7 @@ async function loadModel(): Promise<tf.GraphModel> {
 }
 
 async function runInference(feature: tf.NamedTensorMap): Promise<tf.Tensor>{
-  await sa.init()
+  await sa.init();
   return await sa.inference(feature);
 }
 
@@ -30,8 +30,10 @@ function processOutput(res: tf.Tensor): SentRes{
 
 async function predict(text: string): Promise<SentRes>{
   await sa.init();
-  let res = await sa.analyzeText(text);
-  return processOutput(res);
+  return sa.analyzeText(text)
+  .catch((err) => console.log(err))
+  .then(processOutput);
+
 }
 
 async function encode(text: string): Promise<number[]>{

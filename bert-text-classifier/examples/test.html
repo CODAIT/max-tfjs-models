@@ -10,35 +10,60 @@
       <input type="button" id="submit_text" value="Analyze">
     </div>
     <p>
-      <label for="status">status:</label>
-      <output name="status" id="status">Loading Model...</output>
+      <label for="status">Status:</label>
+      <label name="status" id="status">Loading Model...</label>
+    </p>
+    <p>
+      <label for="status">Result:</label>
+      <label name="result" id="result"></label>
     </p>
   </body>
   <script src="../dist/src/max.sentimentclass.js"></script>
   <script>
-    const submitButton = document.getElementById("submit_text");
-    const statusElement = document.getElementById('status');
+    let submitButton = document.getElementById("submit_text");
+    let statusElement = document.getElementById("status");
+    let resultElement = document.getElementById("result");
     submitButton.addEventListener("click", runPredict);
+    function enableAnalyzeButton(){
+      submitButton.removeAttribute('disabled');
+    }
+
+    function disableAnalyzeButton(){
+      submitButton.setAttribute('disabled','true');
+    }
+
     function loadModel(){
-      submitButton.setAttribute('disabled','true')
+      submitButton.setAttribute('disabled','true');
       textSentimentClassifier.loadModel().then( () =>{
         submitButton.removeAttribute('disabled');
-        updateStatus("Model Loaded", append=false);
+        updateStatus("Model Loaded");
       })
     }
-    function updateStatus(msg, append=true) {
-      statusElement.innerHTML += msg;
-      if(!append)
-        statusElement.innerHTML = msg;
+    function updateStatus(msg) {
+      statusElement.innerHTML = msg;
     }
-    async function runPredict(){
+    function appendResult(msg) {
+      resultElement.innerHTML += msg;
+    }
+    function runPredict(){
+      updateStatus("Running prediction...");
+      disableAnalyzeButton();
       const text = document.getElementById("text_input").value;
-      textSentimentClassifier.predict(text).then((res) =>{
-        updateStatus(`
-          <br> ${text}
-          <br>Positive &#128512;: ${res['pos'].toFixed(4)}
-          <br>Negative &#128534;: ${res['neg'].toFixed(4)}<br>`);
-      }
-  )}
+      setTimeout(() => { //yield the thread to update UI
+        textSentimentClassifier.predict(text)
+        .then((res) =>{
+          appendResult(`
+            <br> ${text}
+            <br>Positive &#128512;: ${res['pos'].toFixed(4)}
+            <br>Negative &#128534;: ${res['neg'].toFixed(4)}<br>`);
+          updateStatus("Ok");
+          enableAnalyzeButton();
+        })
+        .catch((err) => {
+          updateStatus(err);
+          enableAnalyzeButton();
+        })
+      }, 20);
+    }
   </script>
 </html>
