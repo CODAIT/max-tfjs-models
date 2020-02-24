@@ -34,6 +34,8 @@ const estimatePoses = function (heatmapTensor, pafmapTensor) {
     // compute possible poses
     let poseCandidates = computePoses(partCandidates, pairCandidates)
 
+    tf.dispose(heatmapTensor)
+    tf.dispose(pafmapTensor)
     // create the JSON response (with bodyParts, poseLines, etc)
     return formatResponse(poseCandidates)
   })
@@ -271,9 +273,12 @@ const formatResponse = function (humans) {
  * @param {Tensor} inferenceResults - the output from running the model
  */
 const postprocess = function (inferenceResults) {
-  let [heatmapTensor, pafmapTensor] = inferenceResults.unstack()[0].split([HeatMapCount, PafMapCount], 2)
+  let [heatmapTensor, pafmapTensor] = tf.tidy(() => {
+    return inferenceResults.unstack()[0].split([HeatMapCount, PafMapCount], 2)
+  })
   return Promise.all([heatmapTensor.array(), pafmapTensor.array()])
     .then(maps => {
+      tf.dispose(inferenceResults)
       return Promise.resolve({
         heatMap: maps[0],
         pafMap: maps[1],

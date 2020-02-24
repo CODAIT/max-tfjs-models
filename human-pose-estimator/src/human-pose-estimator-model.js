@@ -68,6 +68,10 @@ const inference = function (imageTensor) {
     try {
       const results = run(imageTensor)
       return Promise.resolve(results)
+        .then((result) => {
+          tf.dispose(imageTensor)
+          return result
+        })
     } catch (err) {
       return Promise.reject(err)
     }
