@@ -1,6 +1,6 @@
 {
   "name": "@codait/max-human-pose-estimator",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "Detect humans in an image and estimate the pose for each person.",
   "main": "dist/max.humanpose.cjs.js",
   "module": "dist/max.humanpose.es.js",
