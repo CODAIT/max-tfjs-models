@@ -1,6 +1,6 @@
 {
   "name": "@codait/max-image-segmenter",
-  "version": "0.1.12",
+  "version": "0.2.0",
   "description": "Identify objects in an image, additionally assigning each pixel of the image to a particular object.",
   "main": "dist/max.imgseg.cjs.js",
   "module": "dist/max.imgseg.es.js",
@@ -46,7 +46,7 @@
   "devDependencies": {
     "canvas": "^2.1.0",
     "jasmine": "^3.4.0",
-    "jimp": "^0.6.4",
+    "jimp": "^0.10.3",
     "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",
     "rimraf": "^2.6.3",
