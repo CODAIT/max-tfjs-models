@@ -1,6 +1,6 @@
 {
   "name": "@codait/max-image-segmenter",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "description": "Identify objects in an image, additionally assigning each pixel of the image to a particular object.",
   "main": "dist/max.imgseg.cjs.js",
   "module": "dist/max.imgseg.es.js",
@@ -41,10 +41,10 @@
   },
   "homepage": "https://github.com/CODAIT/max-tfjs-models/tree/master/image-segmenter#readme",
   "dependencies": {
-    "@tensorflow/tfjs-node": "^1.2.4"
+    "@tensorflow/tfjs-node": "^2.0.1"
   },
   "devDependencies": {
-    "canvas": "^2.1.0",
+    "canvas": "^2.6.1",
     "jasmine": "^3.4.0",
     "jimp": "^0.10.3",
     "mkdirp": "^0.5.1",
