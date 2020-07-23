@@ -5,12 +5,13 @@ const { read, MIME_PNG } = require('jimp')
 const { createCanvas, loadImage } = require('canvas')
 
 const createCanvasElement = function (imageInput) {
-  return new Promise(async (resolve, reject) => {
-    const img = await loadImage(imageInput)
-    let canvas = createCanvas(img.width, img.height)
-    let ctx = canvas.getContext('2d')
-    await ctx.drawImage(img, 0, 0)
-    resolve(canvas)
+  let canvas = null
+  return loadImage(imageInput).then(img => {
+    canvas = createCanvas(img.width, img.height)
+    const ctx = canvas.getContext('2d')
+    return ctx.drawImage(img, 0, 0)
+  }).then(() => {
+    return canvas
   })
 }
 
@@ -19,7 +20,7 @@ if (process.argv.length < 3) {
   console.log('  node app.js /path/to/image.jpg')
 } else {
   console.log(`@codait/max-human-pose-estimator v${version}`)
-  let imagePath = process.argv[2]
+  const imagePath = process.argv[2]
 
   read(imagePath)
     .then(imageData => imageData.scaleToFit(512, 512).getBufferAsync(MIME_PNG))

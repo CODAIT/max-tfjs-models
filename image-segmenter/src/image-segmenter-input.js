@@ -3,7 +3,7 @@
 const IMAGESIZE = 512
 
 const computeTargetSize = function (width, height) {
-  let resizeRatio = IMAGESIZE / Math.max(width, height)
+  const resizeRatio = IMAGESIZE / Math.max(width, height)
 
   return {
     width: Math.round(resizeRatio * width),
@@ -32,7 +32,7 @@ const imageToTensor = function (imageData) {
   return tf.tidy(() => {
     const imgTensor = tf.browser.fromPixels(imageData)
     const targetSize = computeTargetSize(imgTensor.shape[0], imgTensor.shape[1])
-    return imgTensor.resizeBilinear([targetSize.width, targetSize.height]).toInt().expandDims()
+    return imgTensor.resizeBilinear([targetSize.width, targetSize.height]).expandDims()
   })
 }
 

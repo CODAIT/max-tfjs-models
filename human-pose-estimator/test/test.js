@@ -7,12 +7,13 @@ const poseEstimator = require('../dist/max.humanpose.cjs.js')
 const imagePath = `${__dirname}/Pilots.jpg`
 
 const createCanvasElement = function (imageInput) {
-  return new Promise(async (resolve, reject) => {
-    const img = await nodeCanvas.loadImage(imageInput)
-    let canvas = nodeCanvas.createCanvas(img.width, img.height)
-    let ctx = canvas.getContext('2d')
-    await ctx.drawImage(img, 0, 0)
-    resolve(canvas)
+  let canvas = null
+  return nodeCanvas.loadImage(imageInput).then(img => {
+    canvas = nodeCanvas.createCanvas(img.width, img.height)
+    const ctx = canvas.getContext('2d')
+    return ctx.drawImage(img, 0, 0)
+  }).then(() => {
+    return canvas
   })
 }
 
@@ -36,7 +37,7 @@ describe('Human Pose Estimator', function () {
   })
 
   it('processInput() cleans up its tensors', function () {
-    let initialNumTensors = tf.memory().numTensors
+    const initialNumTensors = tf.memory().numTensors
     // Should garbage collect every tensor except the one returned
     return input.then(imageElement => poseEstimator.processInput(imageElement))
       .then(() => expect(tf.memory().numTensors - initialNumTensors).toEqual(1))
@@ -48,7 +49,7 @@ describe('Human Pose Estimator', function () {
   })
 
   it('runInference() cleans up its tensors', function () {
-    let initialNumTensors = tf.memory().numTensors
+    const initialNumTensors = tf.memory().numTensors
     // Should garbage collect every tensor except the one returned
     return poseEstimator.runInference(tf.zeros([1, 512, 512, 3]))
       .then(() => expect(tf.memory().numTensors - initialNumTensors).toEqual(1))
@@ -60,7 +61,7 @@ describe('Human Pose Estimator', function () {
   })
 
   it('has no memory leaks', function () {
-    let initialMemory = tf.memory()
+    const initialMemory = tf.memory()
     return input.then(imageElement => poseEstimator.predict(imageElement))
       .then(result => expect(initialMemory).toEqual(tf.memory()))
   })

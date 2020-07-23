@@ -1,7 +1,7 @@
 import { labels } from './image-segmenter-map.js'
 
 const predictedObjs = function (segArray) {
-  let segLabels = {}
+  const segLabels = {}
   segArray.forEach(arr => {
     arr.forEach(seg => {
       if (!segLabels[labels[seg]]) {
