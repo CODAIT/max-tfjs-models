@@ -7,12 +7,13 @@ const imageSegmenter = require('../dist/max.imgseg.cjs.js')
 const imagePath = `${__dirname}/group.jpg`
 
 const createCanvasElement = function (imageInput) {
-  return new Promise(async (resolve, reject) => {
-    const img = await nodeCanvas.loadImage(imageInput)
-    let canvas = nodeCanvas.createCanvas(img.width, img.height)
-    let ctx = canvas.getContext('2d')
-    await ctx.drawImage(img, 0, 0)
-    resolve(canvas)
+  let canvas = null
+  return nodeCanvas.loadImage(imageInput).then(img => {
+    canvas = nodeCanvas.createCanvas(img.width, img.height)
+    const ctx = canvas.getContext('2d')
+    return ctx.drawImage(img, 0, 0)
+  }).then(() => {
+    return canvas
   })
 }
 

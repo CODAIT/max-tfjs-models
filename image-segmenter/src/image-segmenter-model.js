@@ -5,7 +5,7 @@ let modelPath = null
 if (!process.rollupBrowser) {
   modelPath = `file://${__dirname}/../model/model.json`
 } else {
-  modelPath = 'https://s3.us-south.cloud-object-storage.appdomain.cloud/max-assets-prod/max-image-segmenter/tfjs/0.1.0/model.json'
+  modelPath = 'https://s3.us.cloud-object-storage.appdomain.cloud/codait-cos-max/max-image-segmenter/tfjs/0.1.0/model.json'
 }
 let model = null
 let warmed = false
@@ -51,11 +51,13 @@ const run = function (imageTensor) {
     throw new Error('model not available')
   } else {
     // console.log('running model...')
-    // console.time('model inference')
-    const results = model.predict(imageTensor)
-    // console.timeEnd('model inference')
-    warmed = true
-    return results
+    return tf.tidy(() => {
+      // console.time('model inference')
+      const results = model.predict(imageTensor.toInt())
+      // console.timeEnd('model inference')
+      warmed = true
+      return results
+    })
   }
 }
 
