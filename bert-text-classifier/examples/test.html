@@ -1,0 +1,69 @@
+<meta charset="utf-8"/>
+<html>
+  <head>
+  <title>text classifier</title>
+  </head>
+  <body onload=loadModel()>
+    <h1>Text Sentiment Classifier</h1>
+    <div id="div1">
+      <input type="text" id="text_input" name="text_input" value="Enter a sentence.">
+      <input type="button" id="submit_text" value="Analyze">
+    </div>
+    <p>
+      <label for="status">Status:</label>
+      <label name="status" id="status">Loading Model...</label>
+    </p>
+    <p>
+      <label for="status">Result:</label>
+      <label name="result" id="result"></label>
+    </p>
+  </body>
+  <script src="../dist/src/max.sentimentclass.js"></script>
+  <script>
+    let submitButton = document.getElementById("submit_text");
+    let statusElement = document.getElementById("status");
+    let resultElement = document.getElementById("result");
+    submitButton.addEventListener("click", runPredict);
+    function enableAnalyzeButton(){
+      submitButton.removeAttribute('disabled');
+    }
+
+    function disableAnalyzeButton(){
+      submitButton.setAttribute('disabled','true');
+    }
+
+    function loadModel(){
+      submitButton.setAttribute('disabled','true');
+      textSentimentClassifier.loadModel().then( () =>{
+        submitButton.removeAttribute('disabled');
+        updateStatus("Model Loaded");
+      })
+    }
+    function updateStatus(msg) {
+      statusElement.innerHTML = msg;
+    }
+    function appendResult(msg) {
+      resultElement.innerHTML += msg;
+    }
+    function runPredict(){
+      updateStatus("Running prediction...");
+      disableAnalyzeButton();
+      const text = document.getElementById("text_input").value;
+      setTimeout(() => { //yield the thread to update UI
+        textSentimentClassifier.predict(text)
+        .then((res) =>{
+          appendResult(`
+            <br> ${text}
+            <br>Positive &#128512;: ${res['pos'].toFixed(4)}
+            <br>Negative &#128534;: ${res['neg'].toFixed(4)}<br>`);
+          updateStatus("Ok");
+          enableAnalyzeButton();
+        })
+        .catch((err) => {
+          updateStatus(err);
+          enableAnalyzeButton();
+        })
+      }, 20);
+    }
+  </script>
+</html>
